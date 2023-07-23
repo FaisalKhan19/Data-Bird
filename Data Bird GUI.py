@@ -116,8 +116,8 @@ def open_main_menu():
     main_menu.title("Main Menu")
     main_menu.configure(bg="#29AB91")
     main_menu.geometry(f"{root.winfo_width()}x{root.winfo_height()}")
-    main_menu.iconbitmap("C:\\Users\\asus\\Desktop\\Data Bird\\Temp_logo_data_bird.ico")
-    icon_path = "C:\\Users\\asus\\Desktop\\Data Bird\\Temp_logo_data_bird.ico"
+    main_menu.iconbitmap("./Temp_logo_data_bird.ico")
+    icon_path = "./Temp_logo_data_bird.ico"
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(icon_path)
     main_menu.iconbitmap(icon_path)
     # main_menu.resizable(False,False) 
@@ -190,8 +190,8 @@ root.title("Data Bird")
 style = ThemedStyle(root)
 style.set_theme('radiance')
 root.configure(background="#29AB91")
-root.iconbitmap("C:\\Users\\asus\\Desktop\\Data Bird\\Temp_logo_data_bird.ico")
-icon_path = "C:\\Users\\asus\\Desktop\\Data Bird\\Temp_logo_data_bird.ico"
+root.iconbitmap("./Temp_logo_data_bird.ico")
+icon_path = "./Temp_logo_data_bird.ico"
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(icon_path)
 root.iconbitmap(icon_path)
 # font_style = ("Helvetica", 14, "bold")
@@ -223,7 +223,7 @@ root.iconbitmap(icon_path)
 
 
 # root.resizable(False,False)
-logo_image = tk.PhotoImage(file="C:/Users/asus/Desktop/Data Bird/Data Bird Logo.png")
+logo_image = tk.PhotoImage(file="./Data Bird Logo.png")
 smaller_image = logo_image.subsample(2,2)
 
 logo_label = tk.Label(root, image=smaller_image)
