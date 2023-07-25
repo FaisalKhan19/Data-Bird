@@ -3,6 +3,7 @@ import colorsys
 from tkinter import messagebox , simpledialog
 from ttkthemes import ThemedStyle
 import ctypes 
+from driver import initialize_driver
 # def show_tutorial():
 #     tutorial_pages = [
 #     "Page 1: Introduction to the tool.\nYou can explain the first part of the tutorial here.",
@@ -98,6 +99,7 @@ def open_main_menu():
         
         messagebox.showinfo("Input Website URL!")
 
+
     def Scrape_image():
         
         messagebox.showinfo("Input Website URL!")
@@ -136,6 +138,7 @@ def open_main_menu():
 
     menu_bar = tk.Menu(main_menu,font = ("Helvetica",14))
     main_menu.config(menu = menu_bar)
+
 # Function to show an about dialog box
     def show_about():
         messagebox.showinfo("About", "Data Bird\nVersion 0.0\nCreated by Mohd Rehan, Faisal Khan")
@@ -181,7 +184,28 @@ def open_main_menu():
     
     # back_button = tk.Button(main_menu, text="Go Back", command=go_back, bg="#4287f5", fg="#FFFFFF")
     # back_button.pack(side= tk.LEFT,padx = 10,pady=10,anchor=tk.N)
+        # Create an input box to get user input
+    URL_Label= tk.Label(main_menu, text="Enter URL : ")
+    URL_Label.pack()
 
+    URL_input = tk.StringVar()  # Variable to store the user input
+    URL_entry = tk.Entry(main_menu, textvariable=URL_input,font =("Helvetica",14))
+    URL_entry.pack()
+
+    # Function to handle user input
+    def process_input():
+        URL = URL_input.get()
+        print("User entered:", URL)
+        initialize_driver(URL)
+
+    # Create a button to process the user input
+    submit_button = tk.Button(main_menu, text="Submit", command=process_input,font =("Helvetica",14))
+    submit_button.pack(pady=10)
+
+
+    URL_Label.place(relx = 0.3,rely = 0.3,anchor = tk.CENTER)
+    URL_entry.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+    submit_button.place(relx=0.8,rely = 0.8,anchor = tk.CENTER)
 
 
 button_color = '#D0F0C0'
