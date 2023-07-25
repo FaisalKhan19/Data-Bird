@@ -186,26 +186,26 @@ def open_main_menu():
     # back_button.pack(side= tk.LEFT,padx = 10,pady=10,anchor=tk.N)
         # Create an input box to get user input
     URL_Label= tk.Label(main_menu, text="Enter URL : ")
-    URL_Label.pack()
+    URL_Label.pack(pady=2)
 
     URL_input = tk.StringVar()  # Variable to store the user input
     URL_entry = tk.Entry(main_menu, textvariable=URL_input,font =("Helvetica",14))
-    URL_entry.pack()
+    URL_entry.pack(pady =2)
 
     # Function to handle user input
     def process_input():
         URL = URL_input.get()
         print("User entered:", URL)
-        initialize_driver(URL)
+        initialize_driver("http://"+URL)
 
     # Create a button to process the user input
     submit_button = tk.Button(main_menu, text="Submit", command=process_input,font =("Helvetica",14))
-    submit_button.pack(pady=10)
+    submit_button.pack(pady=2)
 
 
-    URL_Label.place(relx = 0.3,rely = 0.3,anchor = tk.CENTER)
+    URL_Label.place(relx = 0.5,rely = 0.4,anchor = tk.CENTER)
     URL_entry.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-    submit_button.place(relx=0.8,rely = 0.8,anchor = tk.CENTER)
+    submit_button.place(relx=0.5,rely = 0.6,anchor = tk.CENTER)
 
 
 button_color = '#D0F0C0'
