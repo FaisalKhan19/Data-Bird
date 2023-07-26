@@ -4,7 +4,7 @@ from selenium import webdriver
 
 def initialize_driver(url):
     global driver
-    driver_path = "./Chromedriver_Win32/chromedriver.exe"
+    driver_path = "./chromedriver.exe"
     driver = webdriver.Chrome(executable_path=driver_path)
     driver.get(url)
 
