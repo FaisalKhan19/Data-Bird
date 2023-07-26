@@ -1,4 +1,5 @@
 from selenium import webdriver
+import sys
 
 # driver = None
 
@@ -7,12 +8,12 @@ def initialize_driver(url):
     driver_path = "./chromedriver.exe"
     driver = webdriver.Chrome(executable_path=driver_path)
     driver.get(url)
+    sys.stdout.write("Driver Running")
 
 def get_driver():
     return driver
 
 def stop():
-    global driver
     if driver:
         driver.quit()
         driver = None
