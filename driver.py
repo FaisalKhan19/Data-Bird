@@ -8,7 +8,7 @@ def initialize_driver(url):
     driver_path = "./Chromedriver_Win32/chromedriver.exe"
     driver = webdriver.Chrome(executable_path=driver_path)
     driver.get(url)
-    sys.stdout.write("Driver Running")
+    sys.stdout.write("Driver Running\n")
 
 def get_driver():
     return driver
