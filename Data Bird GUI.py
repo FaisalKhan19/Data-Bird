@@ -1,9 +1,20 @@
 import tkinter as tk
+import tkinter.ttk as ttk
 import colorsys
 from tkinter import messagebox , simpledialog
 from ttkthemes import ThemedStyle
 import ctypes 
 from driver import initialize_driver
+import webbrowser
+import webview
+import threading
+
+
+
+# import tkinterwebview as webview
+from selenium import webdriver
+
+
 # def show_tutorial():
 #     tutorial_pages = [
 #     "Page 1: Introduction to the tool.\nYou can explain the first part of the tutorial here.",
@@ -116,7 +127,7 @@ def open_main_menu():
 #   Create a New Window
     main_menu = tk.Toplevel(root)
     main_menu.title("Main Menu")
-    main_menu.configure(bg="#29AB91")
+    main_menu.configure(bg="#FFFFFF")
     main_menu.geometry(f"{root.winfo_width()}x{root.winfo_height()}")
     main_menu.iconbitmap("./Temp_logo_data_bird.ico")
     icon_path = "./Temp_logo_data_bird.ico"
@@ -147,24 +158,22 @@ def open_main_menu():
         main_menu.destroy()
         root.deiconify()
 
-    def on_back_button_click():
-        go_back()
+    # def on_back_button_click():
+    #     go_back()
 
+    def on_entry_click(event):
+        URL_entry.delete(0, "end") 
+        URL_entry.config(fg='black')  
 
-    back_menu = tk.Menu(menu_bar, tearoff=False,font = ("Helvetica",10))
-    menu_bar.add_cascade(label="⇐", menu=back_menu)
-    back_menu.add_command(label="Home", command=on_back_button_click)
-
-
-    Options = tk.Menu(menu_bar,tearoff = False,font = ("Helvetica",10))
-    menu_bar.add_cascade(label = "Data Scraping",menu = Options)
-    Options.add_command(label = "Scrape Text",command = Scrape_text)
-    Options.add_separator()
-    Options.add_command(label = "Scrape Images",command = Scrape_image)
-    Options.add_separator()
-    Options.add_command(label ="Scrape Tables" ,command = Scrape_tables)
-    Options.add_separator()
-    Options.add_command(label ="Scrape Graph" ,command = Scrape_Graphs)
+    file = tk.Menu(menu_bar,tearoff = False,font = ("Helvetica",10))
+    menu_bar.add_cascade(label = "file",menu = file)
+    file.add_command(label = "new file",command = Scrape_text)
+    file.add_separator()
+    file.add_command(label = "option 2",command = Scrape_image)
+    file.add_separator()
+    file.add_command(label ="option 3" ,command = Scrape_tables)
+    file.add_separator()
+    file.add_command(label ="option 4" ,command = Scrape_Graphs)
     
 
     Automations = tk.Menu(menu_bar,tearoff=False,font = ("Helvetica",10))
@@ -182,30 +191,43 @@ def open_main_menu():
     help_menu.add_command(label = 'About',command =show_about)
 
     
-    # back_button = tk.Button(main_menu, text="Go Back", command=go_back, bg="#4287f5", fg="#FFFFFF")
-    # back_button.pack(side= tk.LEFT,padx = 10,pady=10,anchor=tk.N)
+    back_button = tk.Button(main_menu, text="Go Back", command=go_back, bg="#4287f5", fg="#FFFFFF")
+    back_button.pack(side= tk.LEFT,padx = 10,pady=10,anchor=tk.N)
         # Create an input box to get user input
-    URL_Label= tk.Label(main_menu, text="Enter URL : ")
-    URL_Label.pack(pady=2)
+    # URL_Label= tk.Label(main_menu, text="Enter URL : ")
+    # URL_Label.pack(pady=2)
+    BIG_FONT = ("calibiri",40,"italic")
+    MAIN_PAGE_DESIGN = tk.Label(main_menu, text = 'Data Bird',font=BIG_FONT)
+    MAIN_PAGE_DESIGN.pack(pady=10)
 
     URL_input = tk.StringVar()  # Variable to store the user input
-    URL_entry = tk.Entry(main_menu, textvariable=URL_input,font =("Helvetica",14))
+    URL_entry = tk.Entry(main_menu, textvariable=URL_input,font =("Helvetica",14),fg= 'grey')
+    URL_entry.insert(0,"Enter URL here...")
+    URL_entry.bind('<FocusIn>',on_entry_click)
     URL_entry.pack(pady =2)
+
 
     # Function to handle user input
     def process_input():
         URL = URL_input.get()
+        URL = "https://" + URL
         print("User entered:", URL)
-        initialize_driver("http://"+URL)
+        main_menu.geometry("800x450")
+        webview.create_window('Requested Website', URL)
+        webview.start()
+
+
+
+
 
     # Create a button to process the user input
-    submit_button = tk.Button(main_menu, text="Submit", command=process_input,font =("Helvetica",14))
+    submit_button = tk.Button(main_menu, text="Submit", command=process_input,font =("Helvetica",14),fg = 'black',bg = 'red')
     submit_button.pack(pady=2)
 
-
-    URL_Label.place(relx = 0.5,rely = 0.4,anchor = tk.CENTER)
+    MAIN_PAGE_DESIGN.place(relx = 0.5,rely = 0.4,anchor = tk.CENTER)
     URL_entry.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
     submit_button.place(relx=0.5,rely = 0.6,anchor = tk.CENTER)
+    
 
 
 button_color = '#D0F0C0'
