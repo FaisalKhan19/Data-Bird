@@ -1,4 +1,4 @@
-from driver import driver
+from ..driver import driver
 from common import By, pd, json, yaml
 
 def identify_table(return_type):
@@ -52,3 +52,4 @@ def table(xpath, return_type):
     else:
         raise ValueError("Invalid return type. Supported types are 'dataframe', 'json', 'list_of_dicts', 'csv', 'excel', and 'yaml'.")
 
+print(identify_table('dataframe'))
