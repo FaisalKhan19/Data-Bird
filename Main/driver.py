@@ -50,6 +50,9 @@ def main():
     root = tk.Tk()
     root.title("Web Automation Example")
 
+    scrape_button = tk.Button(root , text = 'Scrape',command=start_scraping,font =("Helvetica",14),fg= 'grey' )
+    # scrape_buttonvscode-file://vscode-app/c:/Users/asus/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
+    indicate_on_screen  =tk.Button(root,text = 'Indicate on Screen',command = Indicate)
     driver = create_webdriver()
 
     perform_web_automation(driver)
