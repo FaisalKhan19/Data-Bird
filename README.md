@@ -1,4 +1,4 @@
-# Data-Bird
+<h1 align = 'center'>Data-Bird</h1>
 
 <img src='./Data Bird Logo.png'>
 
