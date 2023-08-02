@@ -1,5 +1,8 @@
 # Data-Bird
-A professional data scraping tool.
+
+<img src='./Data Bird Logo.png'>
+
+A GUI based data scraping and automation tool.
 
 # Web Scraping and Automation Project
 
