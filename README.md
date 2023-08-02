@@ -2,7 +2,7 @@
 
 <img src='./Data Bird Logo.png'>
 
-A GUI based data scraping and automation tool.
+<p align ='center'>A GUI based data scraping and automation tool.</p>
 
 # Web Scraping and Automation Project
 
