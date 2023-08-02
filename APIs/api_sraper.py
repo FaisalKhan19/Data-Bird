@@ -1,4 +1,4 @@
-from common import requests, pd
+from Main.common import requests, pd
 
 def get_data(url):
     responce = requests.get(url)

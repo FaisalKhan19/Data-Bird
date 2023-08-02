@@ -3,8 +3,7 @@ import tkinter.ttk as ttk
 import colorsys
 from tkinter import messagebox , simpledialog
 from ttkthemes import ThemedStyle
-import ctypes 
-from driver import initialize_driver
+import ctypes
 import webbrowser
 import webview
 import threading
