@@ -14,6 +14,9 @@ def initialize_driver(url):
     driver = webdriver.Chrome(executable_path=driver_path,options = options)
     driver.get(url)
     sys.stdout.write("Driver Running")
+    
+    
+
 
 def get_driver():
     return driver

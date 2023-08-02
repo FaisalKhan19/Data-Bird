@@ -18,7 +18,6 @@ def create_webdriver():
 def perform_web_automation(driver):
     if driver is not None:
         try:
-            # Open a webpage
             driver.get('https://www.tickertape.in/stocks/tata-consultancy-services-TCS')
 
             # Add a JavaScript click event listener to the window
@@ -41,11 +40,17 @@ def perform_web_automation(driver):
             
         except Exception as e:
             messagebox.showerror("Error", f"Web Automation error: {e}")
-
+def start_scraping():
+    print("press start")
+def Indicate():
+    print("Indicated element ")
 def main():
     root = tk.Tk()
     root.title("Web Automation Example")
 
+    scrape_button = tk.Button(root , text = 'Scrape',command=start_scraping,font =("Helvetica",14),fg= 'grey' )
+    # scrape_buttonvscode-file://vscode-app/c:/Users/asus/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
+    indicate_on_screen  =tk.Button(root,text = 'Indicate on Screen',command = Indicate)
     driver = create_webdriver()
 
     perform_web_automation(driver)

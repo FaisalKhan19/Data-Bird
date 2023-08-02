@@ -8,7 +8,7 @@ from driver import initialize_driver
 import webbrowser
 import webview
 import threading
-
+from test import *
 
 
 # import tkinterwebview as webview
@@ -212,9 +212,11 @@ def open_main_menu():
         URL = URL_input.get()
         URL = "https://" + URL
         print("User entered:", URL)
-        main_menu.geometry("800x450")
-        webview.create_window('Requested Website', URL)
-        webview.start()
+        main()
+        # main_menu.geometry("800x450")
+        # webview.create_window('Requested Website', URL)
+        # webview.start()
+
 
 
 
