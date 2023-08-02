@@ -9,50 +9,7 @@ import webbrowser
 import webview
 import threading
 from test import *
-
-
-# import tkinterwebview as webview
 from selenium import webdriver
-
-
-# def show_tutorial():
-#     tutorial_pages = [
-#     "Page 1: Introduction to the tool.\nYou can explain the first part of the tutorial here.",
-#     "Page 2: Next step in the tutorial.\nYou can explain the next part of the tutorial here.",
-#     "Page 3: Final step in the tutorial.\nYou can explain the final part of the tutorial here."
-#         ]
-#     page_index = 0  
-#     while True:
-#         tutorial_text = tutorial_pages[page_index]
-#         result = messagebox.askokcancel("Tutorial", tutorial_text)
-
-#         if not result:
-#             break  
-#         else:
-#             page_index += 1
-#             if page_index >= len(tutorial_pages):
-#                 break 
-
-
-# def show_tutorial():
-#     page_index = 0  # Start with the first page
-#     tutorial_pages = [
-#     "Page 1: Introduction to the tool.\nYou can explain the first part of the tutorial here.",
-#     "Page 2: Next step in the tutorial.\nYou can explain the next part of the tutorial here.",
-#     "Page 3: Final step in the tutorial.\nYou can explain the final part of the tutorial here."
-#         ]
-#     while True:
-#         tutorial_text = tutorial_pages[page_index]
-#         result = messagebox.showinfo("Tutorial", tutorial_text)
-
-#         if not result:
-#             break  # User clicked "Cancel" or closed the message box
-#         else:
-#             page_index += 1
-#             if page_index >= len(tutorial_pages):
-#                 break  # Reached the last page, exit the loop
-### Custom tutorial dialog window
-
 
 class TutorialDialog(simpledialog.Dialog):
     '''
@@ -89,7 +46,7 @@ class TutorialDialog(simpledialog.Dialog):
     def finish(self):
         self.destroy()
 
-# Function to show the tutorial when the 'Tutorial' button is pressed
+
 def show_tutorial():
     Tutorial_pages = [
                   "Hi There : Hello and Welcome to Data Bird, A Web Scraper."
@@ -101,9 +58,9 @@ def show_tutorial():
 
 
 
-# Function to open the main menu window with options
+
 def open_main_menu():
-    # Hide the root window
+    
     root.withdraw()
 
     def Scrape_text():
@@ -122,9 +79,9 @@ def open_main_menu():
 
         messagebox.showinfo("Input Website URL")
     
-    # root.withdraw()
+    
 
-#   Create a New Window
+
     main_menu = tk.Toplevel(root)
     main_menu.title("Main Menu")
     main_menu.configure(bg="#FFFFFF")
@@ -212,17 +169,13 @@ def open_main_menu():
         URL = URL_input.get()
         URL = "https://" + URL
         print("User entered:", URL)
-        main()
+        scripty(URL,main_menu)
         # main_menu.geometry("800x450")
         # webview.create_window('Requested Website', URL)
         # webview.start()
 
+    
 
-
-
-
-
-    # Create a button to process the user input
     submit_button = tk.Button(main_menu, text="Submit", command=process_input,font =("Helvetica",14),fg = 'black',bg = 'red')
     submit_button.pack(pady=2)
 
@@ -242,32 +195,6 @@ root.iconbitmap("./Temp_logo_data_bird.ico")
 icon_path = "./Temp_logo_data_bird.ico"
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(icon_path)
 root.iconbitmap(icon_path)
-# font_style = ("Helvetica", 14, "bold")
-# label = tk.Label(root, text="Welcome", font=font_style)
-
-# # Create a loading window as a Toplevel widget
-# loading_window = tk.Toplevel(root)
-# loading_window.title("Initiallizing...")
-# loading_window.configure(bg="#F0F0F0")  # Set background color for the loading window
-
-# # Create a Canvas widget to display the loading animation
-# canvas = tk.Canvas(loading_window, width=100, height=100, bg="#F0F0F0", highlightthickness=0)
-# canvas.pack()
-
-# # Draw a simple loading circle animation
-# loading_circle = canvas.create_oval(25, 25, 75, 75, outline="#4287f5", width=2)
-# loading_degree = 0
-
-# def animate_loading():
-#     global loading_degree
-#     loading_degree += 10
-#     canvas.coords(loading_circle, 25, 25, 75, 75)
-#     canvas.create_arc(25, 25, 75, 75, start=loading_degree, extent=120, outline="#4287f5", width=2)
-#     root.after(50, animate_loading)
-
-# # Start the loading animation
-# animate_loading()
-
 
 
 # root.resizable(False,False)
@@ -284,11 +211,10 @@ tutorial_button = tk.Button(root, text="Tutorial", command=show_tutorial, bg=but
 tutorial_button.pack(pady=10)
 
 
-# Create the 'Main Menu' button
 main_menu_button = tk.Button(root, text="Main Menu", command=open_main_menu, bg=button_color, fg="black", font = ('Helvetica',12,"bold"))
 main_menu_button.pack(pady=10)
 
-root.update_idletasks()  # Ensure all widgets are drawn before calculating center position
+root.update_idletasks()  
 x_offset = (root.winfo_screenwidth() - root.winfo_reqwidth()) // 2
 y_offset = (root.winfo_screenheight() - root.winfo_reqheight()) // 2
 root.geometry(f"+{x_offset}+{y_offset}")
