@@ -1,5 +1,5 @@
-from driver import driver
-from common import By, requests
+from Main.driver import driver
+from Main.common import By, requests
 
 def get_all_images():
     image_elements = driver.find_all(By.NAME, "img")
