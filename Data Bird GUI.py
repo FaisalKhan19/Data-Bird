@@ -211,7 +211,7 @@ def open_main_menu():
         URL = URL_input.get()
         URL = "https://" + URL
         print("User entered:", URL)
-        main()
+        # main()
         # main_menu.geometry("800x450")
         # webview.create_window('Requested Website', URL)
         # webview.start()
