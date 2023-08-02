@@ -4,7 +4,7 @@
 
 <p align ='center'>A GUI based data scraping and automation tool.</p>
 
-# Web Scraping and Automation Project
+# Project Description
 
 This project is a web scraping and automation application developed for data scraping and analysis purposes. It leverages the Microsoft UI Automation API to automate interactions with user interfaces and extract data from web pages.
 
