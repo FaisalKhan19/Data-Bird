@@ -1,4 +1,4 @@
-from Main.driver import driver
+from Main.automate_and_scrape import driver
 from Main.common import Keys, By
 
 def type_into(text, xpath):

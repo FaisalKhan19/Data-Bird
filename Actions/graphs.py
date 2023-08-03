@@ -1,5 +1,5 @@
 from Main.common import ActionChains, WebDriverWait, EC, By
-from Main.driver import driver
+from Main.automate_and_scrape import driver
 
 def scrape(xpath):
     element = WebDriverWait(driver,15).until(EC.presence_of_element_located((By.XPATH, xpath)))

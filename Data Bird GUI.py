@@ -9,13 +9,9 @@ import webview
 import threading
 from test import *
 from selenium import webdriver
+from Main import automate_and_scrape
 
 class TutorialDialog(simpledialog.Dialog):
-    '''
-
-    this is the best one as this give the most flexibility to edit how thing looks...
-
-    '''
     
     def __init__(self, parent, title, pages):
         self.pages = pages
@@ -168,7 +164,8 @@ def open_main_menu():
         URL = URL_input.get()
         URL = "https://" + URL
         print("User entered:", URL)
-        scripty(URL,main_menu)
+        automate_and_scrape.main(main_menu,URL)
+        
         # main_menu.geometry("800x450")
         # webview.create_window('Requested Website', URL)
         # webview.start()
