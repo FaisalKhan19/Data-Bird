@@ -2,7 +2,7 @@ from Main.driver import driver
 from Main.common import By, requests
 
 def get_all_images():
-    image_elements = driver.find_all(By.NAME, "img")
+    image_elements = driver.find_all(By.TAG_NAME, "img")
 
     for idx, image_element in enumerate(image_elements):
         image_url = image_element.get_attribute("src")
