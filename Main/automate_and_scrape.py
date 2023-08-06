@@ -119,6 +119,7 @@ def main(main_menu, URL):
         Indicate(driver)
 
     def scrape_elements():
+        indicate_on_screen()
         xpath = driver.execute_script("return highlightedXPath;")
         if xpath:
             start_scraping(driver, xpath)
