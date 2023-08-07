@@ -36,33 +36,37 @@ def screenshot(xpath):
     element.screenshot("image_sc.png")
 
 
-def scrape(driver, scrape_dict={}, dataframe_required = True):
+def scrape(driver, scrape_dict={}):
     if len(scrape_dict) == 0:
         return "No selection provided"
 
-    for i, type, class_name in iter(scrape_dict):
+    for i, (type, class_name) in enumerate(scrape_dict.items()):
         if type == "list":
             ul = driver.find_element(By.CLASS_NAME, class_name)
-            list = ul.find_elements(By.TAG_NAME, "li")
-            for item in list:
-                list[i].append(item.text.strip())
-            return list
+            list_el = ul.find_elements(By.TAG_NAME, "li")
+            list_ = []
+            for item in list_el:
+                list_[i].append(item.text.strip())
+            return list_
 
-        elif type == "cards":
+        elif type == "card":
+            print(class_name['card'])
             cards = driver.find_elements(By.CLASS_NAME, class_name['card'])
-            data = pd.DataFrame()
-            row = []
+            data = []
             cards_scrape = class_name
+            del cards_scrape['card']
             for card in cards:
-                for i, type, class_name in cards_scrape:
-                    if type == 'list':
+                row = []
+                for i, (type, class_name) in enumerate(cards_scrape.items()):
+                    if type == 'text':
+                        text_element = card.find_element(By.CLASS_NAME,class_name)
+                        row.append(text_element.text.strip())
+                    elif type == 'list':
                         ul = card.find_element(By.CLASS_NAME, class_name)
-                        list = ul.find_elements(By.TAG_NAME, "li")
-                        for item in list:
-                            list[i].append(item.text.strip())
-                        row.extend(list)
-                    elif type == 'text':
-                        text_element = card.find_element(By.CLASS_NAME,'class_name')
-                        row.append(text_element.strip())
-                data.loc[len(data)] = row
-    return data
+                        list_el = ul.find_elements(By.TAG_NAME, "li")
+                        list_ = []
+                        for item in list_el:
+                            list_.append(item.text.strip())
+                        row.extend(list_)
+                data.append(row)
+            return pd.DataFrame(data)
