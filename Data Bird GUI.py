@@ -12,7 +12,7 @@ from selenium import webdriver
 from Main import automate_and_scrape
 
 class TutorialDialog(simpledialog.Dialog):
-    
+
     def __init__(self, parent, title, pages):
         self.pages = pages
         self.page_index = 0
@@ -143,7 +143,7 @@ def open_main_menu():
     help_menu.add_command(label = 'About',command =show_about)
 
     
-    back_button = tk.Button(main_menu, text="Go Back", command=go_back, bg="#4287f5", fg="#FFFFFF")
+    back_button = tk.Button(main_menu, text="Go Back", command=go_back, bg=button_color, fg="black")
     back_button.pack(side= tk.LEFT,padx = 10,pady=10,anchor=tk.N)
         # Create an input box to get user input
     # URL_Label= tk.Label(main_menu, text="Enter URL : ")
@@ -172,7 +172,7 @@ def open_main_menu():
 
     
 
-    submit_button = tk.Button(main_menu, text="Submit", command=process_input,font =("Helvetica",14),fg = 'black',bg = 'red')
+    submit_button = tk.Button(main_menu, text="Submit", command=process_input,font =("Helvetica",14),fg = 'black',bg = button_color)
     submit_button.pack(pady=2)
 
     MAIN_PAGE_DESIGN.place(relx = 0.5,rely = 0.4,anchor = tk.CENTER)

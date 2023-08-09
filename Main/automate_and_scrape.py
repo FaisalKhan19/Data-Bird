@@ -49,10 +49,8 @@ def perform_web_automation(driver, url):
 def start_scraping(driver, xpath):
     if xpath:
         try:
-            # Find elements using the captured xpath
             elements = driver.find_elements(by = 'xpath',value =xpath)
 
-            # Scrape data from each element
             for element in elements:
                 # Replace this print statement with your scraping logic
                 print("this element was found!")
