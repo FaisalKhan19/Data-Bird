@@ -1,15 +1,11 @@
 import tkinter as tk
 import tkinter.ttk as ttk
-import colorsys
 from tkinter import messagebox , simpledialog
 from ttkthemes import ThemedStyle
 import ctypes
-import webbrowser
-import webview
-import threading
 from test import *
-from selenium import webdriver
 from Main import automate_and_scrape
+# import customtkinter as tk
 
 class TutorialDialog(simpledialog.Dialog):
 
@@ -54,12 +50,26 @@ def show_tutorial():
 
 
 
-def open_main_menu():
+def data_scraping_menu():
+
+    def update_button_positions(event):
+        button_spacing = 0.2  # Adjust this value to control the spacing between buttons
+        button_x_offset = 0.2  # Adjust this value to control the starting x position of the buttons
+
+        button_positions = [
+            (scrape_text_button, button_x_offset),
+            (scrape_image_button, button_x_offset + button_spacing),
+            (scrape_tables_button, button_x_offset + 2 * button_spacing),
+            (scrape_graph_button, button_x_offset + 3 * button_spacing)
+        ]
+
+        for button, x_offset in button_positions:
+            button.place_configure(relx=x_offset, rely=0.5, anchor=tk.CENTER)
     
     root.withdraw()
 
     def Scrape_text():
-        
+
         messagebox.showinfo("Input Website URL!")
 
 
@@ -68,8 +78,9 @@ def open_main_menu():
         messagebox.showinfo("Input Website URL!")
 
     def Scrape_tables():
-        
+        process_input()
         messagebox.showinfo("Input Website URL!")
+
     def Scrape_Graphs():
 
         messagebox.showinfo("Input Website URL")
@@ -85,20 +96,7 @@ def open_main_menu():
     icon_path = "./Temp_logo_data_bird.ico"
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(icon_path)
     main_menu.iconbitmap(icon_path)
-    # main_menu.resizable(False,False) 
-    # option1_button = tk.Button(main_menu, text="Scrape Text", command=option1_action, bg="#4287f5", fg="#FFFFFF")
-    # option1_button.pack(side= tk.LEFT,padx = 10,pady=10,anchor=tk.N)
-
-    # option2_button = tk.Button(main_menu, text="Scrape Images", command=option2_action, bg="#4287f5", fg="#FFFFFF")
-    # option2_button.pack(side= tk.LEFT,padx = 10,pady=10,anchor=tk.N)
-
-    # option3_button = tk.Button(main_menu, text="Scrape Tables", command=option3_action, bg="#4287f5", fg="#FFFFFF")
-    # option3_button.pack(side= tk.LEFT,padx = 10,pady=10,anchor=tk.N)
-
-    # option4_button = tk.Button(main_menu, text="Scrape Graphs", command=option4_action, bg="#4287f5", fg="#FFFFFF")
-    # option4_button.pack(side= tk.LEFT,padx = 10,pady=10,anchor=tk.N)
     
-
     menu_bar = tk.Menu(main_menu,font = ("Helvetica",14))
     main_menu.config(menu = menu_bar)
 
@@ -116,27 +114,8 @@ def open_main_menu():
     def on_entry_click(event):
         URL_entry.delete(0, "end") 
         URL_entry.config(fg='black')  
-
-    file = tk.Menu(menu_bar,tearoff = False,font = ("Helvetica",10))
-    menu_bar.add_cascade(label = "file",menu = file)
-    file.add_command(label = "new file",command = Scrape_text)
-    file.add_separator()
-    file.add_command(label = "option 2",command = Scrape_image)
-    file.add_separator()
-    file.add_command(label ="option 3" ,command = Scrape_tables)
-    file.add_separator()
-    file.add_command(label ="option 4" ,command = Scrape_Graphs)
     
 
-    Automations = tk.Menu(menu_bar,tearoff=False,font = ("Helvetica",10))
-    menu_bar.add_cascade(label="Automation\RPA")
-    Automations.add_command(label = 'Automation Type 1',command = '')
-    Automations.add_separator()
-    Automations.add_command(label = 'Automation Type 2',command = '')
-    Automations.add_separator()
-    Automations.add_command(label = 'Automation Type 3',command = '')
-    Automations.add_separator()
-    Automations.add_command(label = 'Automation Type 4',command = '')
     
     help_menu = tk.Menu(menu_bar,tearoff =False,font =("Helvetica",10))
     menu_bar.add_cascade(label = 'Help',menu = help_menu)
@@ -152,12 +131,35 @@ def open_main_menu():
     MAIN_PAGE_DESIGN = tk.Label(main_menu, text = 'Data Bird',font=BIG_FONT)
     MAIN_PAGE_DESIGN.pack(pady=10)
 
+
     URL_input = tk.StringVar()  # Variable to store the user input
     URL_entry = tk.Entry(main_menu, textvariable=URL_input,font =("Helvetica",14),fg= 'grey')
     URL_entry.insert(0,"Enter URL here...")
     URL_entry.bind('<FocusIn>',on_entry_click)
     URL_entry.pack(pady =2)
 
+
+
+    scrape_text_button = tk.Button(main_menu, text="Scrape Text", command=Scrape_text, bg=button_color, fg="black")
+    scrape_text_button.pack(padx=1)
+
+    scrape_image_button = tk.Button(main_menu, text="Scrape Images", command=Scrape_image, bg=button_color, fg="black")
+    scrape_image_button.pack(padx=1)
+
+    scrape_tables_button = tk.Button(main_menu, text="Scrape Tables", command=Scrape_tables, bg=button_color, fg="black")
+    scrape_tables_button.pack(padx=1)
+
+    scrape_graph_button = tk.Button(main_menu, text="Scrape Graphs", command=Scrape_Graphs, bg=button_color, fg="black")
+    scrape_graph_button.pack(padx=1)
+
+    MAIN_PAGE_DESIGN.place(relx = 0.5,rely = 0.3,anchor =tk.CENTER)
+    URL_entry.place(relx= 0.5,rely = 0.4,anchor = tk.CENTER)
+    scrape_text_button.place(relx = 0.4,rely = 0.5,anchor = tk.CENTER)
+    scrape_image_button.place(relx = 0.5,rely = 0.5,anchor = tk.CENTER)
+    scrape_tables_button.place(relx = 0.6,rely = 0.5,anchor = tk.CENTER)
+    scrape_graph_button.place(relx =0.7,rely=0.5,anchor=tk.CENTER)
+
+    main_menu.bind("<Configure>", update_button_positions)
 
     # Function to handle user input
     def process_input():
@@ -172,12 +174,11 @@ def open_main_menu():
 
     
 
-    submit_button = tk.Button(main_menu, text="Submit", command=process_input,font =("Helvetica",14),fg = 'black',bg = button_color)
-    submit_button.pack(pady=2)
+    # submit_button = tk.Button(main_menu, text="Submit", command=process_input,font =("Helvetica",14),fg = 'black',bg = button_color)
+    # submit_button.pack(pady=2)
 
-    MAIN_PAGE_DESIGN.place(relx = 0.5,rely = 0.4,anchor = tk.CENTER)
-    URL_entry.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-    submit_button.place(relx=0.5,rely = 0.6,anchor = tk.CENTER)
+    
+    # submit_button.place(relx=0.5,rely = 0.6,anchor = tk.CENTER)
     
 
 
@@ -207,8 +208,13 @@ tutorial_button = tk.Button(root, text="Tutorial", command=show_tutorial, bg=but
 tutorial_button.pack(pady=10)
 
 
-main_menu_button = tk.Button(root, text="Main Menu", command=open_main_menu, bg=button_color, fg="black", font = ('Helvetica',12,"bold"))
-main_menu_button.pack(pady=10)
+_to_data_scraping = tk.Button(root, text="Data Scraping", command=data_scraping_menu, bg=button_color, fg="black", font = ('Helvetica',12,"bold"))
+_to_data_scraping.pack(pady=10)
+
+_price_tracking_page = tk.Button(root, text="Price Tracking", command='', bg=button_color, fg="black", font = ('Helvetica',12,"bold"))
+_price_tracking_page.pack(pady=10)
+
+
 
 root.update_idletasks()  
 x_offset = (root.winfo_screenwidth() - root.winfo_reqwidth()) // 2
