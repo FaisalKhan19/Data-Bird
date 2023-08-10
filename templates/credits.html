@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Credits</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
     <style>
         body {
             background-color: #f0f0f0;
@@ -33,17 +35,37 @@
     </style>
 </head>
 <body>
-    <div class="container text-center credits-page">
-        <img src="Data Bird Logo.png" alt="TempLogo" class="my-5 img-fluid" height="200" width="200">
-        <p>Welcome to Data Bird</p>
-        <p>A tool for all your data needs</p>
-        <p>Made with ❤️ by Mohd Rehan and Faisal Khan</p>
+    <div class="container text-center">
+        <img src="Data Bird Logo.png" alt="TempLogo" class="my-5 img-fluid animate__animated animate__fadeInDown" height="200" width="200">
+        <p class="animate__animated animate__fadeIn">Welcome to Data Bird</p>
+        <p class="animate__animated animate__fadeIn">A tool for all your data needs</p>
+        <p class="animate__animated animate__fadeIn">Made with ❤️ by Mohd Rehan and Faisal Khan</p>
     </div>
 
-    <button type="button" class="btn btn-secondary back-button" onclick="openMainPage()">Back to Main</button>
+    <div class="container credits-page" >
+        <div id="creditsContent" class="my-5 img-fluid animate__animated animate__fadeInUp">
+            <h2 class="animate__animated ">About Data Bird</h2>
+            <p class="animate__animated ">Data Bird is a powerful data tool designed to help you gather, analyze, and visualize data with ease.</p>
+            <h2 class="animate__animated ">Features</h2>
+            <p class="animate__animated ">Currently there are 2 features available.</p>
+            <ul>
+                <p class="animate__animated animate__fadeInLeft"><strong>Data Scraping Wizard</strong>: Easily scrape data from websites</p>
+                <p class="animate__animated animate__fadeInLeft"><strong>Price Tracking</strong>: Monitor prices of your favorite products</p>
+            </ul>
+        </div>
+    </div>
+
+    
+    <button type="button" class="btn btn-secondary back-button" onclick="MainPage()">Back to Main</button>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="eel.js"></script>
     <script src="main.js"></script>
+
+    <script>
+        function MainPage(){ 
+            window.location.replace('index.html')
+        }
+    </script>
 </body>
 </html>

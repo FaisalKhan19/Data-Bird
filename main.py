@@ -6,10 +6,15 @@ eel.init('templates')
 def demo(x):
     return x**2
 
-@eel.expose
-def openCredits():
-    eel.open("credits.html")
+# @eel.expose
+# def openCredits():
+#     eel.show("credits.html")
 
+# @eel.expose
+# def MainPage():
+#     # eel.show("index.html")
+#     eel.go_to('index.html');
+        
 
 eel.start('index.html', size=(1000, 600))
 
