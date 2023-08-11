@@ -1,174 +1,43 @@
-// function highlightElement(element) {
-//     element.originalStyle = element.getAttribute('style');
-//     element.style.backgroundColor = 'rgba(0, 0, 255, 0.3)';  // Blue with 30% opacity
-// }
+// Get a reference to the element
+var element = arguments[0];
 
-// function unhighlightElement(element) {
-//     if (element.originalStyle) {
-//         element.style.backgroundColor = element.originalStyle;
-//     } else {
-//         element.style.backgroundColor = '';
-//     }
-// }
+// Store the original style attributes for later restoration
+var originalStyle = element.getAttribute('style');
 
-// function indicateElement(element) {
-//     highlightElement(element);
+// Apply highlighting styles
+element.style.border = '2px solid red';
+element.style.backgroundColor = 'yellow';
+element.style.zIndex = '9999';
 
-//     function resetHighlight() {
-//         unhighlightElement(element);
-//         element.removeEventListener('mouseleave', resetHighlight);
-//     }
+// Create a tooltip to display the class name
+var tooltip = document.createElement('div');
+tooltip.style.position = 'fixed';
+tooltip.style.background = 'rgba(0, 0, 0, 0.7)';
+tooltip.style.color = 'white';
+tooltip.style.padding = '5px';
+tooltip.style.zIndex = '10000';
+tooltip.style.fontFamily = 'Arial, sans-serif';
+tooltip.style.fontSize = '12px';
+tooltip.style.borderRadius = '3px';
+tooltip.style.visibility = 'hidden';
+tooltip.style.opacity = '0';
+tooltip.style.transition = 'opacity 0.3s';
+tooltip.textContent = 'Class: ' + element.className;
 
-//     element.addEventListener('mouseleave', resetHighlight);
-// }
+// Attach the tooltip to the body
+document.body.appendChild(tooltip);
 
-
-// updated code 
-
-// function highlightElement(element) {
-//     element.originalStyle = element.getAttribute('style');
-//     element.style.backgroundColor = 'rgba(0, 0, 255, 0.3)';  // Blue with 30% opacity
-// }
-
-// function unhighlightElement(element) {
-//     if (element.originalStyle) {
-//         element.style.backgroundColor = element.originalStyle;
-//     } else {
-//         element.style.backgroundColor = '';
-//     }
-// }
-
-// // Add mouseenter and mouseleave event listeners to elements
-// var elements = document.getElementsByTagName("*");
-// for (var i = 0; i < elements.length; i++) {
-//     elements[i].addEventListener('mouseenter', function(event) {
-//         highlightElement(event.target);
-//     });
-
-//     elements[i].addEventListener('mouseleave', function(event) {
-//         unhighlightElement(event.target);
-//     });
-// }
-
-// window.getIndicatedElementXPath = function() {
-//     var xpath = getXPath(indicatedElement);
-//     return xpath;
-// };
-
-// var indicatedElement = null;
-
-// window.addEventListener('click', function(event) {
-//     indicatedElement = event.target;
-// });
-
-// window.addEventListener('click', function(event) {
-//     var xpath = getXPath(event.target);
-//     alert(xpath);
-// });
-
-// // // Function to get the XPath of an element
-// function getXPath(element) {
-//     if (!element) {
-//         return '';
-//     }
-
-//     if (element.tagName.toLowerCase() === 'html') {
-//         return '/html[1]';
-//     }
-
-//     var parentPath = getXPath(element.parentNode);
-//     var elementIndex = Array.prototype.indexOf.call(element.parentNode.childNodes, element) + 1;
-
-//     // If the element has an ID, use it for the XPath
-//     if (element.id) {
-//         return parentPath + '/' + element.tagName.toLowerCase() + '[@id="' + element.id + '"]';
-//     }
-
-//     // If the element has a unique class, use it for the XPath
-//     if (element.classList && element.classList.length === 1) {
-//         var className = element.classList[0];
-//         return parentPath + '/' + element.tagName.toLowerCase() + '[@class="' + className + '"][' + elementIndex + ']';
-//     }
-
-//     // If the element has a name attribute, use it for the XPath
-//     if (element.hasAttribute('name')) {
-//         var name = element.getAttribute('name');
-//         return parentPath + '/' + element.tagName.toLowerCase() + '[@name="' + name + '"][' + elementIndex + ']';
-//     }
-
-//     // If none of the above, use the element's position in its parent as part of the XPath
-//     return parentPath + '/' + element.tagName.toLowerCase() + '[' + elementIndex + ']';
-// }
-
-
-function highlightElement(element) {
-    element.originalStyle = element.getAttribute('style');
-    element.style.backgroundColor = 'rgba(0, 0, 255, 0.3)';  // Blue with 30% opacity
-}
-
-function unhighlightElement(element) {
-    if (element.originalStyle) {
-        element.style.backgroundColor = element.originalStyle;
-    } else {
-        element.style.backgroundColor = '';
-    }
-}
-
-// Add mouseenter and mouseleave event listeners to elements
-var elements = document.getElementsByTagName("*");
-for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener('mouseenter', function(event) {
-        highlightElement(event.target);
-    });
-
-    elements[i].addEventListener('mouseleave', function(event) {
-        unhighlightElement(event.target);
-    });
-}
-
-// Function to get the XPath of an element
-function getXPath(element) {
-    if (!element) {
-        return '';
-    }
-
-    if (element.tagName.toLowerCase() === 'html') {
-        return '/html[1]';
-    }
-
-    var parentPath = getXPath(element.parentNode);
-    var elementIndex = Array.prototype.indexOf.call(element.parentNode.childNodes, element) + 1;
-
-    // If the element has an ID, use it for the XPath
-    if (element.id) {
-        return parentPath + '/' + element.tagName.toLowerCase() + '[@id="' + element.id + '"]';
-    }
-
-    // If the element has a unique class, use it for the XPath
-    if (element.classList && element.classList.length === 1) {
-        var className = element.classList[0];
-        return parentPath + '/' + element.tagName.toLowerCase() + '[@class="' + className + '"][' + elementIndex + ']';
-    }
-
-    // If the element has a name attribute, use it for the XPath
-    if (element.hasAttribute('name')) {
-        var name = element.getAttribute('name');
-        return parentPath + '/' + element.tagName.toLowerCase() + '[@name="' + name + '"][' + elementIndex + ']';
-    }
-
-    // If none of the above, use the element's position in its parent as part of the XPath
-    return parentPath + '/' + element.tagName.toLowerCase() + '[' + elementIndex + ']';
-}
-
-// Function to unhighlight all elements
-function unhighlight_elements() {
-    var highlightedElements = document.querySelectorAll('[style*="rgba(0, 0, 255, 0.3)"]');
-    for (var i = 0; i < highlightedElements.length; i++) {
-        unhighlightElement(highlightedElements[i]);
-    }
-}
-
-// Listen for a custom event to trigger unhighlighting
-window.addEventListener('unhighlight', function() {
-    unhighlight_elements();
+// Show tooltip on hover
+element.addEventListener('mouseover', function () {
+  tooltip.style.visibility = 'visible';
+  tooltip.style.opacity = '1';
 });
+
+// Hide tooltip when not hovered
+element.addEventListener('mouseout', function () {
+  tooltip.style.visibility = 'hidden';
+  tooltip.style.opacity = '0';
+});
+
+// Return the class name of the element
+return element.className;
