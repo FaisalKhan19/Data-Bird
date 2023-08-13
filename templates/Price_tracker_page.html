@@ -10,16 +10,84 @@
 </head>
 <body>
     <div class="container text-center">
-        <img src="Data Bird Logo.png" alt="Data Bird Logo" class="my-5 img-fluid animate__animated animate__fadeIn">
+        <img src="Data Bird Logo.png" alt="Data Bird Logo" class="my-5 img-fluid animate__animated animate__fadeIn" height = 300 width =300>
         <h3 class="animate__animated animate__fadeIn">Price Tracker</h3>
+        <p class="animate__animated animate__fadeIn" style="margin-top: 20px; font-size: 18px;">Currently supports Flipkart for price tracking</p>
+    </div>
+    
+    <div class="mb-3">
+        <input type="url" class="form-control" placeholder="URL for item to monitor..." font="Arial">
+        <div class="main-page-button animate__animated animate__fadeInUp text-center" style ='margin-top: 20px'>
+            <button class="btn btn-success btn-lg" onclick="">Monitor</button>   
+        </div>
     </div>
 
+
+    <div class="mb-3">
+        <h2 align="left">Some Most-Tracked Items</h2>
     
-    <button type="button" class="btn btn-secondary back-button animate__animated animate__fadeIn" onclick="MainPage()">Back to Main</button>
+        <div class="row" id="preTrackedItemsList"></div>
+    </div>
+    <button type="button" id="backButton" class="btn btn-secondary back-button animate__animated animate__fadeIn" onclick="MainPage()">Back to Main</button>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="eel.js"></script>
     <script src="main.js"></script>
+
+    <script>
+        // Sample pre-tracked items data
+        const preTrackedItems = [
+            {
+                title: "Samsung Galaxy S22 Ultra",
+                image: "https://m.media-amazon.com/images/I/71J8tz0UeJL._SL1500_.jpg",
+                priceData: [ /* Price data for chart */ ]
+            },
+            {
+                title: "Iphone 14 Pro Max",
+                image: "https://th.bing.com/th/id/OIP._Cv1tzk3pDniq8Zt3sOaOwHaHa?pid=ImgDet&w=800&h=800&rs=1",
+                priceData: [ /* Price data for chart */ ]
+            },
+            {
+                title: "Asus Zenbook 14 inch pro",
+                image: "https://th.bing.com/th/id/OIP.4ob-KhwMiij5XTWBC4bWNAHaHa?pid=ImgDet&rs=1",
+                priceData: [ /* Price data for chart */ ]
+            }
+        ];
+
+
+        const preTrackedItemsList = document.getElementById("preTrackedItemsList");
+        preTrackedItems.forEach(item => {
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("col-md-4", "mb-3");
+
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            const cardImage = document.createElement("img");
+            cardImage.classList.add("card-img-top");
+            cardImage.src = item.image;
+            cardImage.alt = item.title;
+
+            const cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+            
+            const cardTitle = document.createElement("h5");
+            cardTitle.classList.add("card-title");
+            cardTitle.textContent = item.title;
+
+            cardBody.appendChild(cardTitle);
+            card.appendChild(cardImage);
+            card.appendChild(cardBody);
+            cardDiv.appendChild(card);
+
+            cardDiv.addEventListener("click", () => {
+                // Open chart or perform action on card click
+                // You can use item.priceData to display the price chart
+            });
+
+            preTrackedItemsList.appendChild(cardDiv);
+        });
+    </script>
 
 </body>
 </html>

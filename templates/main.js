@@ -96,4 +96,3 @@ function resetForm() {
 }
 
 //https://jsonplaceholder.typicode.com/posts
-
