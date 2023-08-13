@@ -1,5 +1,6 @@
 import eel
 import requests
+from driver import initialize_driver
 # name of folder where the html, css, js, image files are located
 eel.init('templates')
 
@@ -24,6 +25,11 @@ eel.init('templates')
 #         return data
 #     except Exception as e:
 #         return {'error': 'Failed to fetch data'}
+
+@eel.expose
+def init_driver(url = 'https://example.com'):
+    print("Function called from javascript, url requesetd = ",url)
+    initialize_driver(url)
 
 
 eel.start('index.html', size=(1000, 600))

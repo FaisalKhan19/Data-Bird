@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Element Highlighter",
+  "version": "1.0",
+  "description": "Adds highlighting effect on hover",
+  "permissions": ["activeTab"],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
