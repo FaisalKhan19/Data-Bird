@@ -31,6 +31,10 @@ async function getData() {
         document.getElementById('saveJsonButton').addEventListener('click', function(){
             saveDataAsJSON(data);
         })
+
+        document.getElementById('saveCSVButton').addEventListener('click',function(){
+            saveDataAsCSV(data);
+        })
         
 
     } else {
@@ -59,8 +63,18 @@ function saveData(data, filename, contentType) {
 }
 
 function saveDataAsCSV(data) {
-    console.log('Data saved as CSV:',data);
+    const filename = 'data.csv';
+    const contentType = 'text/csv';
+
+    const header = Object.keys(data[0]).toString();
+    const keys = Object.keys(data[0]);
+
+    // Create CSV content
+    const csvData = `${keys.join(',')}\n${data.map(obj => keys.map(key => obj[key]).join(',')).join('\n')}`;
+    
+    saveData(csvData, filename, contentType);
 }
+
 function saveDataAsJSON(data) {
     const jsonData = JSON.stringify(data, null, 2); // Extract and beautify the JSON data array
     const filename = 'data.json';
@@ -68,4 +82,18 @@ function saveDataAsJSON(data) {
     saveData(jsonData, filename, contentType);
 }
 
+function resetForm() {
+    const resetButton = document.getElementById('resetButton');
+    resetButton.classList.add('animate__animated', 'animate__headShake');
+    
+    setTimeout(function() {
+        document.getElementById('apiEndpoint').value = ''; // Clear the input field
+        document.getElementById('errorMessage').style.display = 'none'; // Hide error message
+        document.getElementById('dataDisplay').style.display = 'none'; // Hide data display
+        
+        resetButton.classList.remove('animate__animated', 'animate__headShake');
+    }, 500); 
+}
+
 //https://jsonplaceholder.typicode.com/posts
+
