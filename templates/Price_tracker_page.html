@@ -7,6 +7,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="Temp_logo_data_bird.ico">
+    <style >
+        .no-items-message {
+            display: block;
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #999;
+        }
+        </style>
 </head>
 <body>
     <div class="container text-center">
@@ -16,16 +26,21 @@
     </div>
     
     <div class="mb-3">
-        <input type="url" class="form-control" placeholder="URL for item to monitor..." font="Arial">
+        <input type="url" class="form-control" placeholder="URL for item to monitor..." id="TrackingURL" font="Arial">
         <div class="main-page-button animate__animated animate__fadeInUp text-center" style ='margin-top: 20px'>
-            <button class="btn btn-success btn-lg" onclick="">Monitor</button>   
+            <button class="btn btn-success btn-lg" id="Monitor">Monitor</button>   
         </div>
+    </div>
+
+    <div class="mb-3">
+        <h2 align="left">Your Tracked Items</h2>
+        <div id="NOItemsYET" class="no-items-message" >No items tracked yet....</div>
+        <div class="row" id="TrackItems"></div>
     </div>
 
 
     <div class="mb-3">
         <h2 align="left">Some Most-Tracked Items</h2>
-    
         <div class="row" id="preTrackedItemsList"></div>
     </div>
     <button type="button" id="backButton" class="btn btn-secondary back-button animate__animated animate__fadeIn" onclick="MainPage()">Back to Main</button>
@@ -87,6 +102,67 @@
 
             preTrackedItemsList.appendChild(cardDiv);
         });
+
+        const trackingItemList = document.getElementById('TrackItems');
+
+        document.getElementById('Monitor').addEventListener('click',async function(){
+            const NOItemsYET = document.getElementById("NOItemsYET");
+            NOItemsYET.style.display ='None';
+            const URL_INPUT = document.getElementById('TrackingURL');
+            const url = URL_INPUT.value;
+            alert("got the url");
+            const timeoutInMilliseconds = 10000; // Adjust as needed
+            const response = await Promise.race([
+                fetch(url, {
+                    headers: {
+                        'User-Agent': '...', // Your user agent here
+                    },
+                }),
+                new Promise((_, reject) =>
+                    setTimeout(() => reject(new Error('Request timed out')), timeoutInMilliseconds)
+                ),
+            ]);
+            const page = await response.text();
+            
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(pageContent, 'text/html');
+            alert("parsing");
+            const imageElement = doc.querySelector('img._396cs4._2amPTt._3qGmMb');
+            const imageUrl = imageElement ? imageElement.src : '';
+
+            const priceElement = doc.querySelector('div._30jeq3._16Jk6d');
+            const price = priceElement ? priceElement.textContent : 'Price not available';
+            
+            const TitleElement =  doc.querySelector('span.B_NuCI');
+            const Title = TitleElement ? TitleElement.textContent : 'Not Available';
+
+            alert("displaying");
+
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("col-md-4", "mb-3");
+
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            const cardImage = document.createElement("img");
+            cardImage.classList.add("card-img-top");
+            cardImage.src = imageUrl
+            cardImage.alt = 'Tracked Product Image'
+
+            const cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+            
+            const cardTitle = document.createElement("h5");
+            cardTitle.classList.add("card-title");
+            cardTitle.textContent = Title ;
+
+            cardBody.appendChild(cardTitle);
+            card.appendChild(cardImage);
+            card.appendChild(cardBody);
+            cardDiv.appendChild(card);
+            trackingItemList.appendChild(cardDiv);
+        });
+        
     </script>
 
 </body>
