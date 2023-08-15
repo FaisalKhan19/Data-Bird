@@ -3,13 +3,6 @@ let overlayContainer = null;
 let isHighlighting = false;
 
 function toggleHighlight(toggleHighlightButton) {
-  // overlayVisible = !overlayVisible;
-  
-  // if (overlayVisible) {
-  //   injectOverlay();
-  // } else {
-  //   removeOverlay();
-  // }
 
   isHighlighting = !isHighlighting;
   if (isHighlighting) {
@@ -40,7 +33,7 @@ function toggleOverlay() {
 
 function handleMouseOver(event) {
   const target = event.target;
-  if (target !== document && !target.classList.contains('overlay')) {
+  if (target !== document && !target.classList.contains('overlay69')) {
     highlightElement(target);
   }
 }
@@ -55,7 +48,8 @@ function handleMouseClick(event) {
   const class_ = target.getAttribute('class');
   const tag_name = target.getAttribute('tag_name');
   indicated_list[class_] = tag_name;
-  // alert(class_, tag_name)
+  slected_element_display = document.getElementById('item-text69')
+  slected_element_display.textContent = class_ + ' ' + tag_name
 }
 
 function saveJsonToFile(data, filename) {
@@ -76,7 +70,7 @@ function saveJsonToFile(data, filename) {
 
 function handleMouseOut(event) {
   const target = event.target;
-  if (target !== document && !target.classList.contains('overlay')) {
+  if (target !== document && !target.classList.contains('overlay69')) {
     unhighlightElement(target);
   }
 }
@@ -95,7 +89,7 @@ function injectOverlay() {
   if (!overlayContainer) {
     overlayContainer = document.createElement('div');
     overlayContainer.id = 'custom-overlay';
-    overlayContainer.className = 'overlay container'
+    overlayContainer.className = 'overlay69 container69'
     
     // Styling for the overlay container
     overlayContainer.style.position = 'fixed';
@@ -110,11 +104,11 @@ function injectOverlay() {
     
     // Styling for the overlay content
     overlayContainer.innerHTML = `
-      <div id="overlay-content" class="overlay div" style="padding: 10px; text-align: center;">
-        <p id="selected-item" class="overlay para" style="color: white; margin-bottom: 10px;">Selected Item: <span id="item-text">None</span></p>
-        <button id="confirm-button" class="overlay button" style="background-color: #4CAF50; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px;">Confirm</button>
-        <button id="save-button" class="overlay button" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Save</button>
-        <button id="toggleHighlight-button" class="overlay button" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Activate Highlight</button>
+      <div id="overlay-content" class="overlay69 div69" style="padding: 10px; text-align: center;">
+        <p id="selected-item" class="overlay69 para69" style="color: white; margin-bottom: 10px;">Selected Item: <span id="item-text69">None</span></p>
+        <button id="confirm-button" class="overlay69 button69" style="background-color: #4CAF50; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px;">Confirm</button>
+        <button id="save-button" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Save</button>
+        <button id="toggleHighlight-button" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Activate Highlight</button>
       </div>
     `;
     
@@ -141,7 +135,9 @@ function injectOverlay() {
     // Append the overlay to the document body
     document.body.appendChild(overlayContainer);
     const toggleHighlightButton = document.getElementById('toggleHighlight-button');
-    toggleHighlightButton.addEventListener('click', toggleHighlight(toggleHighlightButton));
+    toggleHighlightButton.addEventListener('click', function() {
+      toggleHighlight(toggleHighlightButton);
+    });
   }
 }
 
