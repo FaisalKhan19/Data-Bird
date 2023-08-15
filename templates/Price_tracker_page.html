@@ -29,18 +29,19 @@
         <input type="url" class="form-control" placeholder="URL for item to monitor..." id="TrackingURL" font="Arial">
         <div class="main-page-button animate__animated animate__fadeInUp text-center" style ='margin-top: 20px'>
             <button class="btn btn-success btn-lg" id="Monitor">Monitor</button>   
+            <div class = 'row' id = 'empty-error'></div>
         </div>
     </div>
 
     <div class="mb-3">
-        <h2 align="left">Your Tracked Items</h2>
+        <h2 style="text-align: left; margin-left: 20px;">Your Tracked Items</h2>
         <div id="NOItemsYET" class="no-items-message" >No items tracked yet....</div>
         <div class="row" id="TrackItems"></div>
     </div>
 
 
     <div class="mb-3">
-        <h2 align="left">Some Most-Tracked Items</h2>
+        <h2 style = "text-align: left; margin-left: 20px;">Some Most-Tracked Items</h2>
         <div class="row" id="preTrackedItemsList"></div>
     </div>
     <button type="button" id="backButton" class="btn btn-secondary back-button animate__animated animate__fadeIn" onclick="MainPage()">Back to Main</button>
@@ -54,114 +55,148 @@
         const preTrackedItems = [
             {
                 title: "Samsung Galaxy S22 Ultra",
+                url: "https://www.flipkart.com/samsung-galaxy-s22-ultra-5g-phantom-black-256-gb/p/itm7ca5bd1817da5",
                 image: "https://m.media-amazon.com/images/I/71J8tz0UeJL._SL1500_.jpg",
                 priceData: [ /* Price data for chart */ ]
             },
             {
                 title: "Iphone 14 Pro Max",
+                url: "https://www.flipkart.com/apple-iphone-14-pro-max-deep-purple-1-tb/p/itm325420078c46e",
                 image: "https://th.bing.com/th/id/OIP._Cv1tzk3pDniq8Zt3sOaOwHaHa?pid=ImgDet&w=800&h=800&rs=1",
                 priceData: [ /* Price data for chart */ ]
             },
-            {
-                title: "Asus Zenbook 14 inch pro",
-                image: "https://th.bing.com/th/id/OIP.4ob-KhwMiij5XTWBC4bWNAHaHa?pid=ImgDet&rs=1",
-                priceData: [ /* Price data for chart */ ]
-            }
         ];
-
-
+        async function updateLivePrice(item) {
+            try {
+                const [imageUrl, title, price] = await eel.getInfo(item.url)();
+                return price;
+                
+            } catch (error) {
+                console.error('Error fetching live price:', error);
+                return null; // Return a default value (e.g., null) in case of an error
+            }
+        }
+    
+        // Loop through preTrackedItems and create cards with live price
         const preTrackedItemsList = document.getElementById("preTrackedItemsList");
-        preTrackedItems.forEach(item => {
-            const cardDiv = document.createElement("div");
-            cardDiv.classList.add("col-md-4", "mb-3");
+        preTrackedItems.forEach(async item => {
 
+            const livePrice =  await updateLivePrice(item);
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("col-md-2", "mb-2");
+            cardDiv.setAttribute("data-title", item.title); // Set a custom attribute to identify the card
+    
             const card = document.createElement("div");
             card.classList.add("card");
-
+    
             const cardImage = document.createElement("img");
             cardImage.classList.add("card-img-top");
             cardImage.src = item.image;
             cardImage.alt = item.title;
-
+    
             const cardBody = document.createElement("div");
             cardBody.classList.add("card-body");
-            
+    
             const cardTitle = document.createElement("h5");
             cardTitle.classList.add("card-title");
             cardTitle.textContent = item.title;
-
+    
+            const cardPrice = document.createElement("h5");
+            cardPrice.classList.add("card-text", "card-price"); // Add Bootstrap class and custom class for styling
+            cardPrice.textContent = livePrice !== null ? `Current Price: ${livePrice}` : 'Price not available'; // Display appropriate message based on the livePrice value
+    
             cardBody.appendChild(cardTitle);
+            cardBody.appendChild(cardPrice);
             card.appendChild(cardImage);
             card.appendChild(cardBody);
             cardDiv.appendChild(card);
-
+    
+            // Update the live price for each pre-tracked item
+            
+            
             cardDiv.addEventListener("click", () => {
-                // Open chart or perform action on card click
-                // You can use item.priceData to display the price chart
+                alert("You clicked on this item!!!");
             });
 
             preTrackedItemsList.appendChild(cardDiv);
         });
 
+        
         const trackingItemList = document.getElementById('TrackItems');
+        const monitorButton = document.getElementById('Monitor');
 
-        document.getElementById('Monitor').addEventListener('click',async function(){
-            const NOItemsYET = document.getElementById("NOItemsYET");
-            NOItemsYET.style.display ='None';
-            const URL_INPUT = document.getElementById('TrackingURL');
-            const url = URL_INPUT.value;
-            alert("got the url");
-            const timeoutInMilliseconds = 10000; // Adjust as needed
-            const response = await Promise.race([
-                fetch(url, {
-                    headers: {
-                        'User-Agent': '...', // Your user agent here
-                    },
-                }),
-                new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error('Request timed out')), timeoutInMilliseconds)
-                ),
-            ]);
-            const page = await response.text();
-            
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(pageContent, 'text/html');
-            alert("parsing");
-            const imageElement = doc.querySelector('img._396cs4._2amPTt._3qGmMb');
-            const imageUrl = imageElement ? imageElement.src : '';
+        monitorButton.addEventListener('click', async function() {
+        const NOItemsYET = document.getElementById("NOItemsYET");
+        const URL_INPUT = document.getElementById('TrackingURL');
+        const Emptyerror = document.getElementById('empty-error');
 
-            const priceElement = doc.querySelector('div._30jeq3._16Jk6d');
-            const price = priceElement ? priceElement.textContent : 'Price not available';
-            
-            const TitleElement =  doc.querySelector('span.B_NuCI');
-            const Title = TitleElement ? TitleElement.textContent : 'Not Available';
+        const url = URL_INPUT.value.trim();
 
-            alert("displaying");
+        if (url.length > 0) {
+        NOItemsYET.style.display = 'none';
+        Emptyerror.style.display = 'none';
+
+        const loader = document.createElement("div");
+            loader.classList.add("spinner-border", "text-primary");
+            loader.style.margin = "auto"; // Center the loader
+            loader.style.display = "flex"; // Set display to flex
+            loader.style.alignItems = "center"; // Center vertically
+            loader.style.justifyContent = "center"; // Center horizontally
 
             const cardDiv = document.createElement("div");
-            cardDiv.classList.add("col-md-4", "mb-3");
+            cardDiv.classList.add("col-md-2", "mb-2"); // Adjust the width of the card container
+                
+            cardDiv.appendChild(loader);
 
+            trackingItemList.appendChild(cardDiv);
+        try {
+            // Call the getInfo function exposed using Eel
+            const [imageUrl, title, price] = await eel.getInfo(url)();
+            
             const card = document.createElement("div");
             card.classList.add("card");
-
+            
             const cardImage = document.createElement("img");
             cardImage.classList.add("card-img-top");
-            cardImage.src = imageUrl
-            cardImage.alt = 'Tracked Product Image'
-
+            cardImage.src = imageUrl;
+            cardImage.alt = 'Tracked Product Image';
+            
             const cardBody = document.createElement("div");
             cardBody.classList.add("card-body");
             
             const cardTitle = document.createElement("h5");
             cardTitle.classList.add("card-title");
-            cardTitle.textContent = Title ;
+            cardTitle.textContent = title;
 
+            const cardPrice = document.createElement("h5");
+            cardPrice.classList.add("card-text"); 
+            cardPrice.textContent = `Current Price: ${price}`; 
+            
             cardBody.appendChild(cardTitle);
+            cardBody.appendChild(cardPrice); // Append the price element
             card.appendChild(cardImage);
             card.appendChild(cardBody);
+            cardDiv.innerHTML = ""; // Clear the cardDiv
             cardDiv.appendChild(card);
-            trackingItemList.appendChild(cardDiv);
+
+        } catch (error) {
+            trackingItemList.removeChild(cardDiv);
+            console.error('Error fetching webpage:', error);
+        }
+        } else {
+            Emptyerror.innerHTML = 'No URL entered. Please Enter a Valid URL.';
+            Emptyerror.style.display = 'block';
+            Emptyerror.style.color = 'red';
+
+            monitorButton.classList.add('animate__animated', 'animate__headShake');
+
+        setTimeout(function() {
+            monitorButton.classList.remove('animate__animated', 'animate__headShake');
+        }, 500);
+        }
         });
+
+        
         
     </script>
 

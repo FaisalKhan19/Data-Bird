@@ -9,6 +9,15 @@ function MainPage() {
 
 async function getData() {
     const apiEndpoint = document.getElementById('apiEndpoint').value;
+    const getDataButton = document.getElementById("getButton");
+    const ENDP = apiEndpoint.trim();
+    if(ENDP.length < 0) {
+        getDataButton.classList.add('animate__animated','animate__headShake'); 
+
+        setTimeout(function() {
+            getDataButton.classList.remove('animate__animated', 'animate__headShake');
+        }, 500);
+    } 
     const response = await fetch(apiEndpoint);
     const dataDisplay = document.getElementById('dataDisplay');
     const errorMessage = document.getElementById('errorMessage');
@@ -38,10 +47,16 @@ async function getData() {
         
 
     } else {
+        
         errorMessage.innerHTML = 'Failed to Fetch the API data!';
         errorMessage.style.color = 'red';
         errorMessage.style.display = 'block';
         dataDisplay.style.display = 'none';
+        getDataButton.classList.add('animate__animated','animate__headShake'); 
+
+        setTimeout(function() {
+            getDataButton.classList.remove('animate__animated','animate__headShake');
+        },500)
     }
 
 }
@@ -96,3 +111,5 @@ function resetForm() {
 }
 
 //https://jsonplaceholder.typicode.com/posts
+
+
