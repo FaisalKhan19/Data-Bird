@@ -8,12 +8,12 @@ function toggleHighlight(toggleHighlightButton) {
   if (isHighlighting) {
     toggleHighlightButton.textContent = 'Stop Highlighting';
     document.addEventListener('mouseover', handleMouseOver);
-    // document.addEventListener('mouseout', handleMouseOut);
+    document.addEventListener('mouseout', handleMouseOut);
     document.addEventListener('click', handleMouseClick);
   } else {
     toggleHighlightButton.textContent = 'Activate Highlighting';
     document.removeEventListener('mouseover', handleMouseOver);
-    // document.removeEventListener('mouseout', handleMouseOut);
+    document.removeEventListener('mouseout', handleMouseOut);
     document.removeEventListener('click', handleMouseClick);
     removeHighlight();
   }
@@ -33,14 +33,14 @@ function toggleOverlay() {
 
 function handleMouseOver(event) {
   const target = event.target;
-  if (target !== document && !target.classList.contains('overlay69')) {
+  if (target !== document && !target.classList.contains('overlay69') && target !== selectedElement) {
     highlightElement(target);
   }
 }
 
 function updateSelectedItemDisplay() {
   const selectedItemDisplay = document.getElementById('item-text69');
-  
+
   if (selectedElement) {
     selectedItemDisplay.textContent = `${selectedElement.className} ${selectedElement.tagName.toLowerCase()}`;
   } else {
@@ -53,15 +53,11 @@ const indicated_list = {};
 let selectedElement = null;
 
 function handleMouseClick(event) {
+
   const target = event.target;
   if (target.getAttribute('id') == 'save-button') {
-    saveJsonToFile(indicated_list,'indicated.json')
-  }
-  // Set the clicked element as the selected element if it's not an overlay element
-  if (!selectedElement && !target.classList.contains('overlay69')) {
-    selectedElement = target;
-    highlightElement(selectedElement);
-    updateSelectedItemDisplay();
+    saveJsonToFile(indicated_list, 'indicated.json')
+    unhighlightElement(selectedElement);
   }
 
   // Handle confirming the selected element and saving to indicated_list
@@ -72,6 +68,17 @@ function handleMouseClick(event) {
       selectedElement = null;
       updateSelectedItemDisplay();
     }
+  }
+
+  // if (selectedElement && selectedElement!==target) {
+  //   unhighlightElement(selectedElement);
+  // }
+
+  // Set the clicked element as the selected element if it's not an overlay element
+  if (!selectedElement && !target.classList.contains('overlay69')) {
+    selectedElement = target;
+    highlightElement(selectedElement);
+    updateSelectedItemDisplay();
   }
 }
 
@@ -95,7 +102,7 @@ function saveJsonToFile(data, filename) {
 
 function handleMouseOut(event) {
   const target = event.target;
-  if (target !== document && !target.classList.contains('overlay69')) {
+  if (target !== document && !target.classList.contains('overlay69') && target !== selectedElement) {
     unhighlightElement(target);
   }
 }
@@ -110,6 +117,39 @@ function unhighlightElement(element) {
   element.style.backgroundColor = '';
 }
 
+function hierarchyUPnav() {
+  if (selectedElement) {
+    const parent = selectedElement.parentElement;
+    if (parent) {
+      unhighlightElement(selectedElement);
+      selectedElement = parent;
+      highlightElement(selectedElement);
+      updateSelectedItemDisplay();
+    }
+  }
+};
+
+function hierarchyDOWNnav() {
+  if (selectedElement) {
+    const child = selectedElement.querySelector('*');
+    if (child) {
+      unhighlightElement(selectedElement);
+      selectedElement = child;
+      highlightElement(selectedElement);
+      updateSelectedItemDisplay();
+    }
+  }
+}
+
+function highlightSimilar() {
+  if (selectedElement) {
+    const className = selectedElement.className;
+    const similarElements = document.querySelectorAll(`.${className}`);
+    similarElements.forEach(element => {
+      highlightElement(element);
+    });
+  }
+}
 
 function injectOverlay() {
   if (!overlayContainer) {
@@ -135,7 +175,7 @@ function injectOverlay() {
         <button id="confirm-button" class="overlay69 button69" style="background-color: #4CAF50; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px;">Confirm</button>
         <button id="save-button" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Save</button>
         <button id="toggleHighlight-button" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Activate Highlight</button>
-        <div id = overlay-content" class="overlay69 container69 hierarchy-control>
+        <div id = "overlay-content" class="overlay69 container69 hierarchy-control>
           <button id="hier-up" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Parent</button>
           <button id="hier-down" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Child</button>
         </div>
@@ -171,41 +211,18 @@ function injectOverlay() {
     });
     const hierarchyUpButton = overlayContainer.getElementById('hier-up');
     const hierarchyDownButton = overlayContainer.getElementById('hier-down');
-
-    hierarchyUpButton.addEventListener('click', () => {
-      if (selectedElement) {
-        const parent = selectedElement.parentElement;
-        if (parent) {
-          unhighlightElement(selectedElement);
-          selectedElement = parent;
-          highlightElement(selectedElement);
-          updateSelectedItemDisplay();
-        }
-      }
-    });
-
-    hierarchyDownButton.addEventListener('click', () => {
-      if (selectedElement) {
-        const child = selectedElement.querySelector('*');
-        if (child) {
-          unhighlightElement(selectedElement);
-          selectedElement = child;
-          highlightElement(selectedElement);
-          updateSelectedItemDisplay();
-        }
-      }
-    });
-
     const showSimilarButton = overlayContainer.getElementById('show-similar');
 
-    showSimilarButton.addEventListener('click', () => {
-      if (selectedElement) {
-        const className = selectedElement.className;
-        const similarElements = document.querySelectorAll(`.${className}`);
-        similarElements.forEach(element => {
-          highlightElement(element);
-        });
-      }
+    hierarchyUpButton.addEventListener('click', function() {
+      hierarchyUPnav();
+    });
+
+    hierarchyDownButton.addEventListener('click', function() {
+      hierarchyDOWNnav();
+    });
+
+    showSimilarButton.addEventListener('click',function () {
+      highlightSimilar();
     });
   }
 }
