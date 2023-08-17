@@ -56,3 +56,11 @@ body {
     }
 }
 
+.rounded-input {
+    border: 2px solid black; /* Change the color as desired */
+    background-color: #f8f9fa; /* Change the color as desired */
+    padding-top: 10px;
+    border-radius: 20px; /* Adjust the value for more/less rounding */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3); /* Add a subtle shadow */
+    margin-top : 10px;
+}

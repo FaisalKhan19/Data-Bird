@@ -113,3 +113,99 @@ function resetForm() {
 //https://jsonplaceholder.typicode.com/posts
 
 
+async function insertProduct(product) {
+    try {
+        const insertedProductId = await eel.insert_product(product)();
+        console.log('Product inserted with ID:', insertedProductId);
+        return insertedProductId;
+    } catch (error) {
+        console.error('Error inserting product:', error);
+        throw error;
+    }
+}
+
+async function updateProductCurrentPrice(productId, currentPrice) {
+    const connection = await pool.getConnection();
+    try {
+        const query = 'UPDATE PRICE_TRACKING SET current_price = ? WHERE id = ?';
+        await connection.query(query, [currentPrice, productId]);
+    } catch (error) {
+        console.error('Error updating current price:', error);
+        throw error;
+    } finally {
+        connection.release();
+    }
+}
+
+async function getAllTrackedProducts() {
+    try{
+        const trackedItemsL = await eel.itemsInDB()();
+        return trackedItemsL;
+    }
+    catch(error) {
+        console.error("Encountered Error while retreiving data from the server!!!",error);
+        throw error;
+
+    }
+}
+async function loadTrackedItems() {
+    try {
+        const trackedItems = await getAllTrackedProducts();
+        const NOItemsYET = document.getElementById('NOItemsYET');
+        if(trackedItems.length>0) {
+            NOItemsYET.style.display = 'none';
+        }
+        trackingItemList.innerHTML = ""; // Clear existing content
+
+        trackedItems.forEach(item => {
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("col-md-2", "mb-2"); 
+
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            const cardImage = document.createElement("img");
+            cardImage.classList.add("card-img-top");
+            cardImage.src = item[4]; 
+            cardImage.alt = item[1]; 
+
+            const cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+
+            const cardTitle = document.createElement("h5");
+            cardTitle.classList.add("card-title");
+            cardTitle.textContent = item[1]; 
+
+            const cardPrice = document.createElement("h5");
+            cardPrice.classList.add("card-text");
+            cardPrice.textContent = `Target Price: INR ${parseInt(item[3])}`; 
+
+            const cardLink = document.createElement("a");
+            cardLink.classList.add("btn", "btn-primary");
+            cardLink.href = item[2]; 
+            cardLink.target = "_blank"; 
+            cardLink.textContent = "View Product";
+
+            cardBody.appendChild(cardTitle);
+            cardBody.appendChild(cardPrice);
+            cardBody.appendChild(cardLink);
+            card.appendChild(cardImage);
+            card.appendChild(cardBody);
+            cardDiv.appendChild(card);
+
+            trackingItemList.appendChild(cardDiv);
+        });
+    } catch (error) {
+        console.error('Error loading tracked items:', error);
+    }
+}
+
+
+// Simulated function to fetch current price from a website
+async function fetchCurrentPrice(productUrl) {
+    const [imageUrl, title, price] = await eel.getInfo(productUrl)();
+    return price;
+}
+
+
+

@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="Temp_logo_data_bird.ico">
+    <link href="./style.css" rel="stylesheet">
+
     <style >
         .no-items-message {
             display: block;
@@ -16,6 +18,8 @@
             font-weight: bold;
             color: #999;
         }
+
+    
         </style>
 </head>
 <body>
@@ -25,8 +29,10 @@
         <p class="animate__animated animate__fadeIn" style="margin-top: 20px; font-size: 18px;">Currently supports Flipkart for price tracking</p>
     </div>
     
-    <div class="mb-3">
-        <input type="url" class="form-control" placeholder="URL for item to monitor..." id="TrackingURL" font="Arial">
+    <div class="mb-3" align="center">
+        <input type="url" class="form-control rounded-input" style = "max-width: 1000px; text-align: center; display: flex; justify-content: center; align-items: center; padding-bottom: 10px;" placeholder="URL for item to monitor..." id="TrackingURL" font="Arial" required>
+        <input type="text" class="form-control rounded-input Target-Price" style = "max-width: 400px; text-align: center; display: flex; justify-content: center; align-items: center; padding-top: 100" placeholder="Target Price ?" id="TargetPrice" font="Arial" required>
+
         <div class="main-page-button animate__animated animate__fadeInUp text-center" style ='margin-top: 20px'>
             <button class="btn btn-success btn-lg" id="Monitor">Monitor</button>   
             <div class = 'row' id = 'empty-error'></div>
@@ -120,24 +126,27 @@
 
             preTrackedItemsList.appendChild(cardDiv);
         });
-        // code for storing the item in the back end i.e MY SQL so that it price can be updated daily
- // ...... 
-        // code for showing the item on the front end 
         const trackingItemList = document.getElementById('TrackItems');
-        const monitorButton = document.getElementById('Monitor');
 
+        //code for loading the products in the database 
+ 
+        // code for showing the item on the front end 
+        
+        const monitorButton = document.getElementById('Monitor');
         monitorButton.addEventListener('click', async function() {
         const NOItemsYET = document.getElementById("NOItemsYET");
         const URL_INPUT = document.getElementById('TrackingURL');
         const Emptyerror = document.getElementById('empty-error');
+        const TargetPrice = document.getElementById('TargetPrice').value.trim();
 
+        
         const url = URL_INPUT.value.trim();
 
         if (url.length > 0) {
-        NOItemsYET.style.display = 'none';
-        Emptyerror.style.display = 'none';
+            NOItemsYET.style.display = 'none';
+            Emptyerror.style.display = 'none';
 
-        const loader = document.createElement("div");
+            const loader = document.createElement("div");
             loader.classList.add("spinner-border", "text-primary");
             loader.style.margin = "auto"; // Center the loader
             loader.style.display = "flex"; // Set display to flex
@@ -150,53 +159,65 @@
             cardDiv.appendChild(loader);
 
             trackingItemList.appendChild(cardDiv);
-        try {
-            // Call the getInfo function exposed using Eel
-            const [imageUrl, title, price] = await eel.getInfo(url)();
-            
-            const card = document.createElement("div");
-            card.classList.add("card");
-            
-            const cardImage = document.createElement("img");
-            cardImage.classList.add("card-img-top");
-            cardImage.src = imageUrl;
-            cardImage.alt = 'Tracked Product Image';
-            
-            const cardBody = document.createElement("div");
-            cardBody.classList.add("card-body");
-            
-            const cardTitle = document.createElement("h5");
-            cardTitle.classList.add("card-title");
-            cardTitle.textContent = title;
+            try {
+                // Call the getInfo function exposed using Eel
+                const [imageUrl, title, price] = await eel.getInfo(url)();
+                
+                const card = document.createElement("div");
+                card.classList.add("card");
+                
+                const cardImage = document.createElement("img");
+                cardImage.classList.add("card-img-top");
+                cardImage.src = imageUrl;
+                cardImage.alt = 'Tracked Product Image';
+                
+                const cardBody = document.createElement("div");
+                cardBody.classList.add("card-body");
+                
+                const cardTitle = document.createElement("h5");
+                cardTitle.classList.add("card-title");
+                cardTitle.textContent = title;
 
-            const cardPrice = document.createElement("h5");
-            cardPrice.classList.add("card-text"); 
-            cardPrice.textContent = `Current Price: ${price}`; 
+                const cardPrice = document.createElement("h5");
+                cardPrice.classList.add("card-text"); 
+                cardPrice.textContent = `Current Price: ${price}`; 
+                
+                cardBody.appendChild(cardTitle);
+                cardBody.appendChild(cardPrice); // Append the price element
+                card.appendChild(cardImage);
+                card.appendChild(cardBody);
+                // Insert product data into the database using Eel
+                const insertedProductId = await insertProduct({
+                    "product_name": title,
+                    "image_url": imageUrl,
+                    "target_price": parseInt(TargetPrice),
+                    "product_url": url,
+                });
+                cardDiv.innerHTML = ""; // Clear the cardDiv
+                cardDiv.appendChild(card);
+                await loadTrackedItems();
+
+            } catch (error) {
+                trackingItemList.removeChild(cardDiv);
+                console.error('Error fetching webpage:', error);
+            }
+            } else {
+                Emptyerror.innerHTML = 'No URL entered. Please Enter a Valid URL.';
+                Emptyerror.style.display = 'block';
+                Emptyerror.style.color = 'red';
+
+                monitorButton.classList.add('animate__animated', 'animate__headShake');
+
+            setTimeout(function() {
+                monitorButton.classList.remove('animate__animated', 'animate__headShake');
+            }, 500);
+            }
+            });
             
-            cardBody.appendChild(cardTitle);
-            cardBody.appendChild(cardPrice); // Append the price element
-            card.appendChild(cardImage);
-            card.appendChild(cardBody);
-            cardDiv.innerHTML = ""; // Clear the cardDiv
-            cardDiv.appendChild(card);
-
-        } catch (error) {
-            trackingItemList.removeChild(cardDiv);
-            console.error('Error fetching webpage:', error);
-        }
-        } else {
-            Emptyerror.innerHTML = 'No URL entered. Please Enter a Valid URL.';
-            Emptyerror.style.display = 'block';
-            Emptyerror.style.color = 'red';
-
-            monitorButton.classList.add('animate__animated', 'animate__headShake');
-
-        setTimeout(function() {
-            monitorButton.classList.remove('animate__animated', 'animate__headShake');
-        }, 500);
-        }
-        });
-
+            document.addEventListener("DOMContentLoaded", async () => {
+                // Call your loadTrackedItems function here
+                await loadTrackedItems();
+            });
         
         
     </script>
