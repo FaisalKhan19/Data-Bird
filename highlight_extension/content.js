@@ -15,7 +15,7 @@ function toggleHighlight(toggleHighlightButton) {
     document.removeEventListener('mouseover', handleMouseOver);
     document.removeEventListener('mouseout', handleMouseOut);
     document.removeEventListener('click', handleMouseClick);
-    removeHighlight();
+    unhighlightElement();
   }
 }
 
@@ -118,6 +118,7 @@ function unhighlightElement(element) {
 }
 
 function hierarchyUPnav() {
+  console.log('hierarchyUPnav called');
   if (selectedElement) {
     const parent = selectedElement.parentElement;
     if (parent) {
@@ -139,7 +140,7 @@ function hierarchyDOWNnav() {
       updateSelectedItemDisplay();
     }
   }
-}
+};
 
 function highlightSimilar() {
   if (selectedElement) {
@@ -149,7 +150,7 @@ function highlightSimilar() {
       highlightElement(element);
     });
   }
-}
+};
 
 function injectOverlay() {
   if (!overlayContainer) {
@@ -175,10 +176,8 @@ function injectOverlay() {
         <button id="confirm-button" class="overlay69 button69" style="background-color: #4CAF50; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px;">Confirm</button>
         <button id="save-button" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Save</button>
         <button id="toggleHighlight-button" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Activate Highlight</button>
-        <div id = "overlay-content" class="overlay69 container69 hierarchy-control>
-          <button id="hier-up" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Parent</button>
-          <button id="hier-down" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Child</button>
-        </div>
+        <button id="hier-up" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Parent</button>
+        <button id="hier-down" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Child</button>
         <button id="show-similar" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Show Similar</button>
       </div>
     `;
@@ -209,9 +208,9 @@ function injectOverlay() {
     toggleHighlightButton.addEventListener('click', function () {
       toggleHighlight(toggleHighlightButton);
     });
-    const hierarchyUpButton = overlayContainer.getElementById('hier-up');
-    const hierarchyDownButton = overlayContainer.getElementById('hier-down');
-    const showSimilarButton = overlayContainer.getElementById('show-similar');
+    const hierarchyUpButton = document.getElementById('hier-up');
+    const hierarchyDownButton = document.getElementById('hier-down');
+    const showSimilarButton = document.getElementById('show-similar');
 
     hierarchyUpButton.addEventListener('click', function() {
       hierarchyUPnav();
