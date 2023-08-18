@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
         body {
             background-color: #f0f0f0;
         }
+
         .wizard-container {
             background-color: #ffffff;
             padding: 20px;
@@ -20,20 +22,24 @@
             margin-top: 20px;
             animation: fadeInUp 1s ease-in-out;
         }
+
         .main-page-button {
             margin-top: 20px;
             display: flex;
             justify-content: center;
             gap: 20px;
         }
+
         .btn-success {
             background-color: #28a745;
             border-color: #28a745;
             transition: background-color 0.3s ease;
         }
+
         .btn-success:hover {
             background-color: #218838;
         }
+
         .back-button {
             position: fixed;
             bottom: 20px;
@@ -41,6 +47,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container text-center animate__animated animate__fadeIn">
         <img src="Data Bird Logo.png" alt="Data Bird Logo" class="my-5 img-fluid animate__animated animate__fadeIn">
@@ -55,28 +62,34 @@
                 <button class="btn btn-success" onclick="get_driver()">Go</button>
             </div>
         </div>
-    
+
         <div class="main-page-button animate__animated animate__fadeInUp">
             <button class="btn btn-success btn-lg" onclick="">Scrape Text</button>
             <button class="btn btn-success btn-lg" onclick="">Scrape Image</button>
             <button class="btn btn-success btn-lg" onclick="">Scrape Graphs</button>
             <button class="btn btn-success btn-lg" onclick="">Scrape Tables</button>
+            <button class="btn btn-success btn-lg" onclick="openProcess()">Load Process</button>
         </div>
     </div>
 
 
-    <button type="button" class="btn btn-secondary back-button animate__animated animate__fadeIn" onclick="MainPage()">Back to Main</button>
+    <button type="button" class="btn btn-secondary back-button animate__animated animate__fadeIn"
+        onclick="MainPage()">Back to Main</button>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="eel.js"></script>
     <script src="main.js"></script>
-    <script type = text/javascript>
-    function get_driver() {
-        var url = document.getElementById('urlInput').value;
-        console.log(url)
-        eel.init_driver(url);
-    }
+    <script type=text/javascript>
+        function get_driver() {
+            var url = document.getElementById('urlInput').value;
+            console.log(url)
+            eel.init_driver(url);
+        }
+        function openProcess() {
+            window.location.replace('loadProcess.html');
+        }
     </script>
 
 </body>
+
 </html>
