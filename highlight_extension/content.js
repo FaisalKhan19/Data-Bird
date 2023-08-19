@@ -63,7 +63,7 @@ function handleMouseClick(event) {
   // Handle confirming the selected element and saving to indicated_list
   if (target.getAttribute('id') == 'confirm-button') {
     if (selectedElement) {
-      indicated_list[selectedElement.className] = selectedElement.tagName.toLowerCase();
+      indicated_list[selectedElement.tagName] = selectedElement.className.toLowerCase();
       unhighlightElement(selectedElement); // Remove highlight from the element
       selectedElement = null;
       updateSelectedItemDisplay();

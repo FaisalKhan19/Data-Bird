@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
         body {
             background-color: #f0f0f0;
         }
+
         .wizard-container {
             background-color: #ffffff;
             /* padding: 20px; */
@@ -22,28 +24,74 @@
             width: 100%;
             min-height: 100vh;
         }
+
         .main-page-button {
             margin-top: 20px;
             display: flex;
             justify-content: center;
             gap: 20px;
         }
+
         .btn-success {
             background-color: #28a745;
             border-color: #28a745;
             transition: background-color 0.3s ease;
         }
+
         .btn-success:hover {
             background-color: #218838;
         }
+
         .back-button {
             position: fixed;
             bottom: 20px;
             left: 20px;
         }
+
+        #dynamicContentContainer {
+            margin-top: 20px;
+        }
+
+        .action {
+            padding: 10px;
+            border: 1px solid #000;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        .action span {
+            display: block;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Add this CSS code to your existing stylesheet */
+        .entry-container {
+            border: 2px solid #3498db;
+            /* Border style for the box */
+            border-radius: 5px;
+            /* Rounded corners for the box */
+            margin: 10px;
+            /* Margin to create spacing between boxes */
+            padding: 10px;
+            /* Padding inside the box */
+            display: flex;
+            /* Use flex display for horizontal layout */
+            align-items: center;
+            /* Align items vertically within the box */
+        }
+
+        /* Add this CSS code if you want to add space between class, arrow, and tag */
+        .class-element,
+        .arrow-element,
+        .tag-element {
+            margin: 0 10px;
+            /* Adjust spacing as needed */
+        }
     </style>
 </head>
-<body  class="d-flex flex-column min-vh-100">
+
+<body class="d-flex flex-column min-vh-100">
     <div class="wizard-container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -69,7 +117,7 @@
             </div>
         </nav>
         <div class="container-fluid flex-grow-1">
-            <div class="row h-100">
+            <div class="row h-100 d-flex flex-row">
                 <!-- Vertical Toolbar -->
                 <div class="col-lg-2 bg-dark text-light p-4">
                     <h3>Toolbar</h3>
@@ -98,35 +146,42 @@
                         <!-- Add more options and sub-options here -->
                     </ul>
                 </div>
-    
                 <!-- Workspace Content -->
-                <div class="col-lg-10 p-4">
+                <div class="col-lg-8 p-4">
                     <div class="background-text-button d-flex flex-column align-items-center justify-content-center">
                         <h2>Load New Process</h2>
                         <button id="load-json-button" class="btn btn-primary mt-3">
                             <span class="fw-bold">+</span>
                         </button>
                         <pre id="output"></pre>
+                        <div id="dynamicContentContainer"></div>
                     </div>
+                </div>
+                <!-- Vertical Toolbar -->
+                <div class="col-lg-2 bg-dark text-light p-4">
+                    <h3>Manage Element</h3>
+                    <div id="manage-class"></div>
                 </div>
             </div>
         </div>
-        
-    
+
+
     </div>
 
 
-    <button type="button" class="btn btn-secondary back-button animate__animated animate__fadeIn" onclick="ScrapingWizard()">Back to Main</button>
+    <button type="button" class="btn btn-secondary back-button animate__animated animate__fadeIn"
+        onclick="ScrapingWizard()">Back to Main</button>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="eel.js"></script>
     <script src="process.js"></script>
     <script src="main.js"></script>
-    <script type = text/javascript>
+    <script type=text/javascript>
     function ScrapingWizard() {
         window.location.replace("Scraping_page.html")
     }
     </script>
 
 </body>
+
 </html>
