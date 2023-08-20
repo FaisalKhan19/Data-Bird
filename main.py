@@ -38,6 +38,10 @@ def init_driver(url = 'https://example.com'):
     print("Function called from javascript, url requesetd = ",url)
     initialize_driver(url)
 
+@eel.expose
+def map_process(mapping):
+    print("process mapping recieved: ", mapping)
+
 @eel.expose 
 def getInfo(url):
     response = requests.get(url)

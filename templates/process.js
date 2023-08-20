@@ -17,6 +17,9 @@ function handleFileSelection(event) {
             const jsonData = JSON.parse(content);
             generateVisualization(jsonData);
             manage_class(jsonData);
+            document.getElementById("build").addEventListener('click', function() {
+                mapProcess(jsonData);
+            });
         };
 
         reader.readAsText(file);
@@ -58,12 +61,15 @@ function generateVisualization(jsonData) {
     for (const tagName in jsonData) {
         // Create a container for each entry
         const entryContainer = document.createElement("div");
+        const placeholder = document.createElement('span');
         entryContainer.classList.add("entry-container");
+        placeholder.classList.add('placeholder');
 
         const tagElement = document.createElement("button");
         tagElement.classList.add("tag-element");
         tagElement.textContent = tagName;
 
+        entryContainer.appendChild(placeholder);
         entryContainer.appendChild(tagElement);
 
         dynamicContentContainer.appendChild(entryContainer);
@@ -85,13 +91,20 @@ function addDraggableBehavior() {
 
 addDraggableBehavior();
 
-// Function to add drop behavior to entry containers
 function addDropBehavior() {
     const dragTargets = document.querySelectorAll(".entry-container");
 
     dragTargets.forEach(dragTarget => {
         dragTarget.addEventListener('dragover', (event) => {
             event.preventDefault();
+        });
+        const placeholder = document.getElementsByClassName('placeholder');
+        dragTarget.addEventListener('dragenter', (event) => {
+            event.target.classList.add('drag-over'); // Add a class for visual indication
+        });
+
+        dragTarget.addEventListener('dragleave', (event) => {
+            event.target.classList.remove('drag-over'); // Remove the visual indication class
         });
 
         dragTarget.addEventListener('drop', (event) => {
@@ -100,12 +113,29 @@ function addDropBehavior() {
 
             // Create a new element to display the dropped data
             const droppedElement = document.createElement('div');
-            droppedElement.textContent = `Dropped: ${draggedData}`;
+            droppedElement.textContent = `${draggedData}`;
             droppedElement.classList.add('drag-element');
-            droppedElement.style.backgroundColor = '#27ae60'; // Custom color
+            // droppedElement.style.backgroundColor = '#27ae60'; // Custom color
 
-            // Append the new element after the drop target
-            dragTarget.insertAdjacentElement('afterend', droppedElement);
+            // Check if the event target is the entry-container
+            if (event.target.classList.contains('entry-container')) {
+                const placeholderElement = event.target.querySelector('.placeholder');
+                // Insert the new element before the placeholder
+                event.target.insertBefore(droppedElement, placeholderElement);
+            }
+            
+            event.target.classList.remove('drag-over'); // Remove the visual indication class
         });
     });
+}
+
+function mapProcess(jsonData) {
+    const containers = document.querySelectorAll(".entry-container");
+    const process_mapping = {};
+    containers.forEach(container => {
+        const action = container.querySelector('.drag-element');
+        const tag_name = container.querySelector('.tag-element');
+        process_mapping[jsonData[tag_name.textContent]] = action.textContent;
+    });
+    eel.map_process(process_mapping); 
 }
