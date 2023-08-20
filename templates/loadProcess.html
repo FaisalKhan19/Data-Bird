@@ -87,6 +87,29 @@
         .tag-element {
             margin: 0 10px;
             /* Adjust spacing as needed */
+
+            .expand-button {
+                display: block;
+                width: 100%;
+                text-align: left;
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+
+            .sub-list {
+                display: none;
+                list-style-type: none;
+                padding-left: 20px;
+            }
+
+            .sub-list.active {
+                display: block;
+            }
+        }
+        .draggable_tool {
+            cursor: grab;
+            font-size: 10px;
         }
     </style>
 </head>
@@ -121,29 +144,25 @@
                 <!-- Vertical Toolbar -->
                 <div class="col-lg-2 bg-dark text-light p-4">
                     <h3>Toolbar</h3>
-                    <ul class="list-unstyled">
-                        <li>Option 1</li>
-                        <li>Option 2
-                            <ul>
-                                <li>Sub-option 1</li>
-                                <li>Sub-option 2</li>
-                            </ul>
-                        </li>
-                        <li>Option 1</li>
-                        <li>Option 2
-                            <ul>
-                                <li>Sub-option 1</li>
-                                <li>Sub-option 2</li>
-                            </ul>
-                        </li>
-                        <li>Option 1</li>
-                        <li>Option 2
-                            <ul>
-                                <li>Sub-option 1</li>
-                                <li>Sub-option 2</li>
-                            </ul>
-                        </li>
-                        <!-- Add more options and sub-options here -->
+                    <button class="expand-button">Actions</button>
+                    <ul class="sub-list list-unstyled">
+                        <li class="draggable-tool">Type Into</li>
+                        <li class="draggable-tool">Mouse Click</li>
+                        <li class="draggable-tool">Right Click</li>
+                        <li class="draggable-tool">Hover</li>
+                    </ul>
+                    <button class="expand-button">Data</button>
+                    <ul class="list-unstyled sub-list">
+                        <li class="draggable-tool">Scrape Table</li>
+                        <li class="draggable-tool">Screenshot</li>
+                        <li class="draggable-tool">Save Image</li>
+                        <li class="draggable-tool">Scrape Graph</li>
+                    </ul>
+                    <button class="expand-button">Advanced</button>
+                    <ul class="list-unstyled sub-list">
+                        <li class="draggable-tool">Drag</li>
+                        <li class="draggable-tool">Get Attribute</li>
+                        <li class="draggable-tool">Modify HTML</li>
                     </ul>
                 </div>
                 <!-- Workspace Content -->
@@ -160,6 +179,7 @@
                 <!-- Vertical Toolbar -->
                 <div class="col-lg-2 bg-dark text-light p-4">
                     <h3>Manage Element</h3>
+                    <span>Class: </span>
                     <div id="manage-class"></div>
                 </div>
             </div>

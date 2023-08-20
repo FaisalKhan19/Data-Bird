@@ -29,18 +29,18 @@ function manage_class(jsonData) {
     const entryContainers = document.getElementsByClassName("tag-element");
 
     for (const entryContainer of entryContainers) {
-        entryContainer.addEventListener('click', function(event) {
+        entryContainer.addEventListener('click', function (event) {
             const manageClass = document.getElementById("manage-class");
             // Clear existing content
             while (manageClass.firstChild) {
                 manageClass.removeChild(manageClass.firstChild);
             }
-            
+
             // Create a new span element and append jsonData[tag] as its content
             const tagClassManage = document.createElement('span');
             tagClassManage.classList.add('tag-class-manage');
             tagClassManage.textContent = jsonData[event.target.textContent];
-            
+
             // Append the new span element to the manageClass container
             manageClass.appendChild(tagClassManage);
         });
@@ -56,31 +56,56 @@ function generateVisualization(jsonData) {
 
     // Iterate through JSON data and create elements
     for (const tagName in jsonData) {
-        const className = jsonData[tagName];
-
         // Create a container for each entry
         const entryContainer = document.createElement("div");
         entryContainer.classList.add("entry-container");
-
-        // Create elements for class and tag name
-        const classElement = document.createElement("span");
-        classElement.classList.add("class-element");
-        classElement.textContent = className;
-
-        const arrowElement = document.createElement("span");
-        arrowElement.classList.add("arrow-element");
-        arrowElement.textContent = "➜";
 
         const tagElement = document.createElement("button");
         tagElement.classList.add("tag-element");
         tagElement.textContent = tagName;
 
-        // Append elements to the container
-        // manage_class.appendChild(classElement);
-        // entryContainer.appendChild(arrowElement);
         entryContainer.appendChild(tagElement);
 
-        // Append the entry container to the dynamic content container
         dynamicContentContainer.appendChild(entryContainer);
     }
+    addDropBehavior();
+}
+
+function addDraggableBehavior() {
+    const draggableTools = document.querySelectorAll(".draggable-tool");
+
+    draggableTools.forEach(draggableTool => {
+        draggableTool.draggable = true; // Set the element as draggable
+
+        draggableTool.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData('text/plain', draggableTool.textContent);
+        });
+    });
+}
+
+addDraggableBehavior();
+
+// Function to add drop behavior to entry containers
+function addDropBehavior() {
+    const dragTargets = document.querySelectorAll(".entry-container");
+
+    dragTargets.forEach(dragTarget => {
+        dragTarget.addEventListener('dragover', (event) => {
+            event.preventDefault();
+        });
+
+        dragTarget.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const draggedData = event.dataTransfer.getData('text/plain');
+
+            // Create a new element to display the dropped data
+            const droppedElement = document.createElement('div');
+            droppedElement.textContent = `Dropped: ${draggedData}`;
+            droppedElement.classList.add('drag-element');
+            droppedElement.style.backgroundColor = '#27ae60'; // Custom color
+
+            // Append the new element after the drop target
+            dragTarget.insertAdjacentElement('afterend', droppedElement);
+        });
+    });
 }
