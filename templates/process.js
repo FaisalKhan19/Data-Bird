@@ -125,8 +125,30 @@ function addDropBehavior() {
             }
             
             event.target.classList.remove('drag-over'); // Remove the visual indication class
+            if(draggedData == 'Type Into'){
+                add_readFrom(dragTarget);
+            };
         });
     });
+}
+
+function add_readFrom(container) {
+    const dialog = document.createElement('div');
+    dialog.innerHTML = `
+        <div class="readFrom dialog container style="padding: 10px; text-align: center;">
+            <form class="p-3 text-center" action='/' method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="typeinto_input" class="form-label">DataFrame(.xlsx, .csv)</label>
+                    <input class="form-control" type="file" id="typeinto_input" name="typeinto_input">
+                <div>
+                <div class="mb-3">
+                    <label class="form-label">Column Name</label>
+                    <input type="text" class="form-control" id="column_name" name="column_name">
+                </div>
+            </form> 
+        </div>
+    `
+    container.appendChild(dialog);
 }
 
 function mapProcess(jsonData) {
