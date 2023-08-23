@@ -135,29 +135,48 @@ function addDropBehavior() {
 function add_readFrom(container) {
     const dialog = document.createElement('div');
     dialog.innerHTML = `
-        <div class="readFrom dialog container style="padding: 10px; text-align: center;">
+        <div class="readFrom dialog container" style="padding: 10px; text-align: center;">
             <form class="p-3 text-center" action='/' method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="typeinto_input" class="form-label">DataFrame(.xlsx, .csv)</label>
-                    <input class="form-control" type="file" id="typeinto_input" name="typeinto_input">
-                <div>
+                    <input class="form-control" type="file" id="dataframe_input" name="typeinto_input">
+                </div>
                 <div class="mb-3">
                     <label class="form-label">Column Name</label>
-                    <input type="text" class="form-control" id="column_name" name="column_name">
+                    <input type="text" class="form-control" id="column_input" name="column_name">
                 </div>
             </form> 
         </div>
-    `
+    `;
     container.appendChild(dialog);
 }
 
 function mapProcess(jsonData) {
     const containers = document.querySelectorAll(".entry-container");
+    const dataframeInput = document.getElementById("dataframe_input");
+    const columnInput = document.getElementById("column_input");
     const process_mapping = {};
-    containers.forEach(container => {
-        const action = container.querySelector('.drag-element');
-        const tag_name = container.querySelector('.tag-element');
-        process_mapping[jsonData[tag_name.textContent]] = action.textContent;
-    });
-    eel.map_process(process_mapping); 
+    
+    if (dataframeInput.files.length > 0) {
+        const dataframe = dataframeInput.files[0];
+        const column = columnInput.value;
+        
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const fileContent = event.target.result;
+            console.log('File Content:', fileContent);
+            
+            containers.forEach(container => {
+                const action = container.querySelector('.drag-element');
+                const tag_name = container.querySelector('.tag-element');
+                process_mapping[jsonData[tag_name.textContent]] = action.textContent;
+            });
+            
+            eel.map_process(process_mapping, column, fileContent); 
+        };
+        reader.readAsText(dataframe);
+    } else {
+        console.log('No DataFrame file selected.');
+    }
 }
+

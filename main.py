@@ -2,6 +2,7 @@ import eel
 import requests
 from driver import initialize_driver
 from bs4 import BeautifulSoup
+import pandas as pd
 # import mysql.connector
 # name of folder where the html, css, js, image files are located
 eel.init('templates')
@@ -39,8 +40,8 @@ def init_driver(url = 'https://example.com'):
     initialize_driver(url)
 
 @eel.expose
-def map_process(mapping):
-    print("process mapping recieved: ", mapping)
+def map_process(mapping, column, df):
+    print("process mapping recieved: ", mapping, column, df)
 
 @eel.expose 
 def getInfo(url):

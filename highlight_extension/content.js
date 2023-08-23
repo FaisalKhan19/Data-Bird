@@ -10,12 +10,14 @@ function toggleHighlight(toggleHighlightButton) {
     document.addEventListener('mouseover', handleMouseOver);
     document.addEventListener('mouseout', handleMouseOut);
     document.addEventListener('click', handleMouseClick);
+    addClickOverlay();
   } else {
     toggleHighlightButton.textContent = 'Activate Highlighting';
     document.removeEventListener('mouseover', handleMouseOver);
     document.removeEventListener('mouseout', handleMouseOut);
     document.removeEventListener('click', handleMouseClick);
     unhighlightElement();
+    removeClickOverlay();
   }
 }
 
@@ -239,3 +241,33 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     toggleOverlay();
   }
 });
+
+// Function to add the overlay
+function addClickOverlay() {
+  const overlay = document.createElement('div');
+  overlay.id = 'highlight-overlay';
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.background = 'rgba(0, 0, 0, 0)';
+  overlay.style.zIndex = '9999';
+  overlay.style.pointerEvents = 'auto'; // Allow clicks on the overlay itself
+
+  // Attach a click event listener to block clicks
+  overlay.addEventListener('click', event => {
+      event.stopPropagation();
+      event.preventDefault();
+  });
+
+  document.body.appendChild(overlay);
+}
+
+// Function to remove the overlay
+function removeClickOverlay() {
+  const overlay = document.getElementById('highlight-overlay');
+  if (overlay) {
+      overlay.remove();
+  }
+}
