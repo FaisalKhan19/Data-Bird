@@ -3,7 +3,10 @@ import requests
 from driver import initialize_driver
 from bs4 import BeautifulSoup
 import pandas as pd
+import tkinter as tk
+from tkinter import filedialog
 import mysql.connector
+from Scraper.LoopHandler import read_from_dataframe
 # name of folder where the html, css, js, image files are located
 eel.init('templates')
 
@@ -32,17 +35,19 @@ eel.init('templates')
 db_connection = mysql.connector.connect(
     host='localhost',
     user='root',
-    password='reyan786',
+    password='faisal6542',
     database='price_tracker'
 )
 @eel.expose
 def init_driver(url = 'https://example.com'):
     print("Function called from javascript, url requesetd = ",url)
-    initialize_driver(url)
+    driver = initialize_driver(url)
+    driver.get(url)
 
 @eel.expose
-def map_process(mapping, column, df):
-    print("process mapping recieved: ", mapping, column, df)
+def map_process(driver, mapping, column, df_path):
+    print("process mapping recieved: ", mapping, column, df_path)
+    read_from_dataframe(driver, df_path, column, mapping)
 
 @eel.expose 
 def getInfo(url):

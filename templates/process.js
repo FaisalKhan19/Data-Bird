@@ -4,6 +4,10 @@ document.getElementById("load-json-button").addEventListener("click", function (
     fileInput.accept = ".json";
     fileInput.addEventListener("change", handleFileSelection);
     fileInput.click();
+    load_button = document.getElementById("load-json-button")
+    document.getElementById('workspace-container').removeChild(load_button);
+    load_button.classList.add("nav-link");
+    document.getElementById("load-process-button-nav").appendChild(load_button);
 });
 
 function handleFileSelection(event) {
@@ -138,8 +142,8 @@ function add_readFrom(container) {
         <div class="readFrom dialog container" style="padding: 10px; text-align: center;">
             <form class="p-3 text-center" action='/' method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="typeinto_input" class="form-label">DataFrame(.xlsx, .csv)</label>
-                    <input class="form-control" type="file" id="dataframe_input" name="typeinto_input">
+                    <label for="typeinto_input" class="form-label">DataFrame Path(.xlsx, .csv)</label>
+                    <input type="text" class="form-control" id="dataframe_path" name="dataframe_path">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Column Name</label>
@@ -153,30 +157,19 @@ function add_readFrom(container) {
 
 function mapProcess(jsonData) {
     const containers = document.querySelectorAll(".entry-container");
-    const dataframeInput = document.getElementById("dataframe_input");
+    const dataframeInput = document.getElementById("dataframe_path");
     const columnInput = document.getElementById("column_input");
     const process_mapping = {};
     
-    if (dataframeInput.files.length > 0) {
-        const dataframe = dataframeInput.files[0];
-        const column = columnInput.value;
+    const dataframe = dataframeInput.value;
+    const column = columnInput.value;
         
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const fileContent = event.target.result;
-            console.log('File Content:', fileContent);
-            
-            containers.forEach(container => {
-                const action = container.querySelector('.drag-element');
-                const tag_name = container.querySelector('.tag-element');
-                process_mapping[jsonData[tag_name.textContent]] = action.textContent;
-            });
-            
-            eel.map_process(process_mapping, column, fileContent); 
-        };
-        reader.readAsText(dataframe);
-    } else {
-        console.log('No DataFrame file selected.');
-    }
+    containers.forEach(container => {
+        const action = container.querySelector('.drag-element');
+        const tag_name = container.querySelector('.tag-element');
+        process_mapping[jsonData[tag_name.textContent]] = action.textContent;
+    });
+    
+    eel.map_process(process_mapping, column, dataframe); 
 }
 

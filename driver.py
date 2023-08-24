@@ -12,7 +12,7 @@ def initialize_driver(url):
     options.add_extension(extension_path)
     driver_path = "./chromedriver.exe"
     driver = webdriver.Chrome(executable_path=driver_path,options = options)
-    driver.get(url)
+    return driver
     
     
 
