@@ -10,16 +10,6 @@ from Scraper.LoopHandler import read_from_dataframe
 
 eel.init('templates')
 
-        
-# @eel.expose
-# def fetch_data(api_endpoint):
-#     try:
-#         response = requests.get(api_endpoint)
-#         data = response.json()
-#         return data
-#     except Exception as e:
-#         return {'error': 'Failed to fetch data'}
-
 # connection to the database hosted on aws rds
 
 def connect_to_db():
