@@ -31,13 +31,17 @@ eel.init('templates')
 #         return data
 #     except Exception as e:
 #         return {'error': 'Failed to fetch data'}
-    
+
+# connection to the database hosted on aws rds
+ 
 db_connection = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='faisal6542',
-    database='price_tracker'
+    host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
+    user='DataBird',
+    password='databird1472023',
+    database='price_tracking_Database'
 )
+
+
 @eel.expose
 def init_driver(url = 'https://example.com'):
     print("Function called from javascript, url requesetd = ",url)
@@ -66,7 +70,7 @@ def getInfo(url):
 def insert_product(product):
     try:
         cursor = db_connection.cursor()
-        query = 'INSERT INTO price_tracker.tracking (product_name, product_url, target_price, image_url) VALUES (%s, %s, %s, %s)'
+        query = 'INSERT INTO price_tracking_Database.tracked_products (product_name, product_url, target_price, image_url) VALUES (%s, %s, %s, %s)'
         values = (product['product_name'], product['product_url'], product['target_price'], product['image_url'])
         cursor.execute(query, values)
         db_connection.commit()
@@ -83,7 +87,7 @@ def insert_product(product):
 def itemsInDB():
     try:
         cursor = db_connection.cursor()
-        query = 'SELECT * FROM price_tracker.tracking'
+        query = 'SELECT * FROM price_tracking_Database.tracked_products'
         cursor.execute(query)
         rows = cursor.fetchall()  # Fetch all the rows
         cursor.close()  # Close the cursor after fetching
