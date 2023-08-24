@@ -62,5 +62,28 @@ body {
     padding-top: 10px;
     border-radius: 20px; /* Adjust the value for more/less rounding */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.3); /* Add a subtle shadow */
+    margin-top : 5px;
+}
+
+.rounded-button {
+    border : 1px solid black;
+    padding-top: 10px;
+    border-radius: 40px;
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+    margin-top : 10px;
+}
+
+.go-button {
+    border : 1px solid black;
+    padding-top: 10px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+    margin-top : 10px;
+}
+
+.index-button {
+    padding-top: 10px;
+    border-radius: 40px;
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
     margin-top : 10px;
 }
