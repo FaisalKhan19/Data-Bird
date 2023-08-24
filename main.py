@@ -4,24 +4,12 @@ from driver import initialize_driver
 from bs4 import BeautifulSoup
 import pandas as pd
 import tkinter as tk
-from tkinter import filedialog
+
 import mysql.connector
 from Scraper.LoopHandler import read_from_dataframe
-# name of folder where the html, css, js, image files are located
+
 eel.init('templates')
 
-# @eel.expose
-# def demo(x):
-#     return x**2
-
-# @eel.expose
-# def openCredits():
-#     eel.show("credits.html")
-
-# @eel.expose
-# def MainPage():
-#     # eel.show("index.html")
-#     eel.go_to('index.html');
         
 # @eel.expose
 # def fetch_data(api_endpoint):
@@ -33,14 +21,35 @@ eel.init('templates')
 #         return {'error': 'Failed to fetch data'}
 
 # connection to the database hosted on aws rds
- 
-db_connection = mysql.connector.connect(
-    host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
-    user='DataBird',
-    password='databird1472023',
-    database='price_tracking_Database'
-)
 
+def connect_to_db():
+    try:
+        db_connection = mysql.connector.connect(
+            host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
+            user='DataBird',
+            password='databird1472023',
+            database='price_tracking_Database'
+        )
+        return db_connection
+    except Exception as e:
+        print("Error connecting to database:", e)
+        return None
+
+db_connection = connect_to_db()
+
+def is_internet_available():
+    try:
+        requests.get("http://www.google.com", timeout=5)
+        return True
+    except requests.ConnectionError:
+        return False
+    
+@eel.expose
+def check_and_start():
+    if not is_internet_available():
+        eel.start('NoInternetPage.html', size=(1200, 600))
+    else:
+        eel.start('index.html', size=(1200, 600))
 
 @eel.expose
 def init_driver(url = 'https://example.com'):
@@ -94,8 +103,11 @@ def itemsInDB():
         return rows
     except Exception as e:
         print("Something went wrong:", str(e))
+if(is_internet_available()) :
+    eel.start('index.html', size=(1200, 600))
 
-eel.start('index.html', size=(1200, 600))
+else: 
+    eel.start('NoInternetPage.html',size =(1200,600))
 
 
 # const databaseProducts = getAllTrackedProducts();

@@ -207,25 +207,3 @@ async function fetchCurrentPrice(productUrl) {
 }
 
 
-const InternetStatus = document.getElementById("internetStatus");
-
-window.addEventListener('load', detectInternet);
-window.addEventListener('online', detectInternet);
-window.addEventListener('offline', detectInternet);
-
-function detectInternet() {
-    if (navigator.onLine) {
-        InternetStatus.innerHTML = ''; 
-        window.location.replace('./index.html');
-    } else {
-        const offlineImage = document.createElement('img');
-        offlineImage.src = './NoInternetImage.jpg'; 
-        offlineImage.alt = 'No Internet';
-        InternetStatus.innerHTML = ''; 
-        InternetStatus.appendChild(offlineImage);
-        window.location.replace('./NoInternetPage.html');
-    }
-}
-
-
-
