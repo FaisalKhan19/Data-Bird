@@ -110,3 +110,18 @@
  .drag-over {
     background-color: #80f5f7;
  }
+
+ /* Added styles for the layout */
+/* .wizard-container {
+    display: flex;
+    flex-grow: 1;
+} */
+
+/* .sidebar {
+    position: fixed;
+    overflow-y: auto;
+} */
+
+.workspace-container {
+    overflow: auto;
+}

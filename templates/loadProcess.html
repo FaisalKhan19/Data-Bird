@@ -34,7 +34,7 @@
                             <a class="nav-link" href="#">Help</a>
                         </li>
                         <li class="nav-item">
-                            <button id="build">Build Process</button>
+                            <button id="build" class = 'btn btn-success rounded-input'>Build Process</button>
                         </li>
                     </ul>
                 </div>
@@ -43,7 +43,7 @@
         <div class="container-fluid flex-grow-1">
             <div class="row h-100 d-flex flex-row">
                 <!-- Vertical Toolbar -->
-                <div class="col-lg-2 bg-dark text-light p-4">
+                <div class="col-lg-2 bg-dark text-light p-4 sidebar">
                     <h3>Toolbar</h3>
                     <button class="expand-button">Actions</button>
                     <ul class="sub-list list-unstyled">
@@ -67,7 +67,7 @@
                     </ul>
                 </div>
                 <!-- Workspace Content -->
-                <div class="col-lg-8 p-4">
+                <div class="col-lg-8 p-4 workspace-container">
                     <div class="background-text-button d-flex flex-column align-items-center justify-content-center">
                         <h2>Load New Process</h2>
                         <button id="load-json-button" class="btn btn-primary mt-3">
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <!-- Vertical Toolbar -->
-                <div class="col-lg-2 bg-dark text-light p-4">
+                <div class="col-lg-2 bg-dark text-light p-4 sidebar">
                     <h3>Manage Element</h3>
                     <span>Class: </span>
                     <div id="manage-class"></div>

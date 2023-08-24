@@ -3,7 +3,7 @@ import requests
 from driver import initialize_driver
 from bs4 import BeautifulSoup
 import pandas as pd
-# import mysql.connector
+import mysql.connector
 # name of folder where the html, css, js, image files are located
 eel.init('templates')
 
@@ -28,12 +28,13 @@ eel.init('templates')
 #         return data
 #     except Exception as e:
 #         return {'error': 'Failed to fetch data'}
-# db_connection = mysql.connector.connect(
-#     host='localhost',
-#     user='root',
-#     password='reyan786',
-#     database='price_tracker'
-# )
+    
+db_connection = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password='reyan786',
+    database='price_tracker'
+)
 @eel.expose
 def init_driver(url = 'https://example.com'):
     print("Function called from javascript, url requesetd = ",url)
