@@ -21,6 +21,7 @@ Data-Bird is a versatile web scraping and automation application designed to str
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
+- [Screenshots](#screenshots)
 
 ## Introduction
 
@@ -92,4 +93,12 @@ This project is licensed under the MIT License. For more details, refer to the [
 ## Contact
 
 For inquiries or suggestions, you can reach out via email: faisalk3996@gmail.com and reyan786@gmail.com .
+
+## Screenshots
+
+![Screenshot 1](Screenshots/screenshot(1).png)
+![Screenshot 2](Screenshots/screenshot(2).png)
+![Screenshot 3](Screenshots/screenshot(3).png)
+![Screenshot 4](Screenshots/screenshot(4).png)
+![Screenshot 5](Screenshots/screenshot(5).png)
 

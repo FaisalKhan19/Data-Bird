@@ -1,0 +1,127 @@
+ body {
+     background-color: #f0f0f0;
+ }
+
+ .wizard-container {
+     background-color: #ffffff;
+     /* padding: 20px; */
+     border-radius: 10px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     text-align: center;
+     /* margin-top: 20px; */
+     animation: fadeInUp 1s ease-in-out;
+     width: 100%;
+     min-height: 100vh;
+ }
+
+ .main-page-button {
+     margin-top: 20px;
+     display: flex;
+     justify-content: center;
+     gap: 20px;
+ }
+
+ .btn-success {
+     background-color: #28a745;
+     border-color: #28a745;
+     transition: background-color 0.3s ease;
+ }
+
+ .btn-success:hover {
+     background-color: #218838;
+ }
+
+ .back-button {
+     position: fixed;
+     bottom: 20px;
+     left: 20px;
+ }
+
+ #dynamicContentContainer {
+     margin-top: 20px;
+ }
+
+ .action {
+     padding: 10px;
+     border: 1px solid #000;
+     margin: 10px;
+     display: inline-block;
+ }
+
+ .action span {
+     display: block;
+     font-size: 14px;
+     color: #666;
+ }
+
+ /* Add this CSS code to your existing stylesheet */
+ .entry-container {
+     border: 2px solid #3498db;
+     /* Border style for the box */
+     border-radius: 5px;
+     /* Rounded corners for the box */
+     margin: 10px;
+     /* Margin to create spacing between boxes */
+     padding: 10px;
+     /* Padding inside the box */
+     display: flex;
+     /* Use flex display for horizontal layout */
+     align-items: center;
+     /* Align items vertically within the box */
+     /* width: 220px; */
+ }
+
+ /* Add this CSS code if you want to add space between class, arrow, and tag */
+ .class-element,
+ .arrow-element,
+ .tag-element {
+     margin: 0 10px;
+     /* Adjust spacing as needed */
+
+     .expand-button {
+         display: block;
+         width: 100%;
+         text-align: left;
+         background: none;
+         border: none;
+         cursor: pointer;
+     }
+
+     .sub-list {
+         display: none;
+         list-style-type: none;
+         padding-left: 20px;
+     }
+
+     .sub-list.active {
+         display: block;
+     }
+ }
+ /* .tag-element {
+    position: relative;
+    right: -58px;
+ } */
+
+ .draggable_tool {
+     cursor: grab;
+     font-size: 10px;
+ }
+
+ .drag-over {
+    background-color: #80f5f7;
+ }
+
+ /* Added styles for the layout */
+/* .wizard-container {
+    display: flex;
+    flex-grow: 1;
+} */
+
+/* .sidebar {
+    position: fixed;
+    overflow-y: auto;
+} */
+
+.workspace-container {
+    overflow: auto;
+}

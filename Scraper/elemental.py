@@ -1,4 +1,3 @@
-from Main.automate_and_scrape import driver
 from Main.common import By, requests, pd
 
 
