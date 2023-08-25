@@ -33,11 +33,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Help</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item nav-button">
                             <button id="build" class = 'btn btn-success rounded-input nav-link'>Build Process</button>
                         </li>
-                        <li id="load-process-button-nav" class="nav-item">
-                            
+                        <li class="nav-item nav-button">
+                            <button id="run" class = 'btn btn-success rounded-input nav-link'>Run Process</button>
+                        </li>
+                        <li id="load-process-button-nav" class="nav-item nav-button">
+                            <button id="load-json-button" class="btn btn-primary">
+                                <span class="fw-bold">+</span>
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -72,8 +77,8 @@
                 <!-- Workspace Content -->
                 <div class="col-lg-8 p-4 workspace-container">
                     <div id="workspace-container" class="background-text-button d-flex flex-column align-items-center justify-content-center">
-                        <h2>Load New Process</h2>
-                        <button id="load-json-button" class="btn btn-primary">
+                        <h2 id="load-process-text">Load New Process</h2>
+                        <button id="load-json-button-workspace" class="btn btn-primary">
                             <span class="fw-bold">+</span>
                         </button>
                         <pre id="output"></pre>

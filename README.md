@@ -101,4 +101,15 @@ For inquiries or suggestions, you can reach out via email: faisalk3996@gmail.com
 ![Screenshot 3](Screenshots/screenshot(3).png)
 ![Screenshot 4](Screenshots/screenshot(4).png)
 ![Screenshot 5](Screenshots/screenshot(5).png)
+<be/>
+by Syed Rehan Ali Kazmi
+[Linkedin](https://www.linkedin.com/in/mohd-rehan-3744b6194/) | [GitHub](https://github.com/rehan-786)
+
+<br />
+by Faisal Ali Khan
+
+[Linkedin](https://www.linkedin.com/in/faisal-k-727b5017b/) | [GitHub](https://github.com/faisalkhan19)
+<br />
+by Mohammad Adnaan<br />
+[Linkedin](https://www.linkedin.com/in/mohammad-adnaan-51272024a/) | [GitHub](https://github.com/mohd-adnaan)
 

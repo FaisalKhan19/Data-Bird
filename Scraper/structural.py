@@ -12,7 +12,7 @@ def identify_table(driver, return_type):
 
     return scraped_tables
 
-def scrape_table(table, return_type):
+def scrape_table(table, return_type, work_dir):
     # table = driver.find_element(By.XPATH,xpath)
     table_rows = table.find_elements(By.TAG_NAME, "tr")
 
@@ -27,7 +27,8 @@ def scrape_table(table, return_type):
     if return_type == "dataframe":
         # Convert the list of rows to a DataFrame with proper headers
         df = pd.DataFrame(data[1:])
-        return df
+        path = work_dir.replace("/","//") + '//scraped_table.csv'
+        df.to_csv(path)
     elif return_type == "json":
         # Convert the list of rows to a list of dictionaries with proper headers and then to a JSON string
         json_data = json.dumps([dict(zip(headers, row)) for row in data[1:]])
