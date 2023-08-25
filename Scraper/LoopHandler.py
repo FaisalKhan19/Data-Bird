@@ -12,7 +12,8 @@ def read_from_dataframe(driver, df, col_name, mappings):
                 actions.move_to_element(hover_element).perform()
             elif task == 'Scrape Table':
                 table = driver.find_element(By.CLASS_NAME, class_)
-                scrape_tabel(table, 'dataframe')
+                table = scrape_tabel(table, 'dataframe')
+                return table
             elif task == 'Screenshot':
                 element = driver.find_element(By.CLASS_NAME, class_)
                 element.screenshot("image_sc.png")
