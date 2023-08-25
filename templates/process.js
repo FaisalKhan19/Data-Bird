@@ -1,13 +1,25 @@
+document.getElementById("load-json-button-workspace").addEventListener("click", function () {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".json";
+    fileInput.addEventListener("change", handleFileSelection);
+    fileInput.click();
+    load_button = document.getElementById("load-json-button-workspace");
+    h2 = document.getElementById("load-process-text")
+    document.getElementById('workspace-container').removeChild(load_button);
+    document.getElementById('workspace-container').removeChild(h2);
+});
+
 document.getElementById("load-json-button").addEventListener("click", function () {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = ".json";
     fileInput.addEventListener("change", handleFileSelection);
     fileInput.click();
-    load_button = document.getElementById("load-json-button")
+    load_button = document.getElementById("load-json-button-workspace");
+    h2 = document.getElementById("load-process-text")
     document.getElementById('workspace-container').removeChild(load_button);
-    load_button.classList.add("nav-link");
-    document.getElementById("load-process-button-nav").appendChild(load_button);
+    document.getElementById('workspace-container').removeChild(h2);
 });
 
 function handleFileSelection(event) {
@@ -24,6 +36,11 @@ function handleFileSelection(event) {
             document.getElementById("build").addEventListener('click', function() {
                 mapProcess(jsonData);
             });
+            const run_button = document.getElementById("run");
+            run_button.addEventListener('click', function () {
+                mapProcess(jsonData);
+            });
+
         };
 
         reader.readAsText(file);
@@ -155,7 +172,9 @@ function add_readFrom(container) {
     container.appendChild(dialog);
 }
 
-function mapProcess(jsonData) {
+let buildCompleted = false;
+
+async function mapProcess(jsonData) {
     const containers = document.querySelectorAll(".entry-container");
     const dataframeInput = document.getElementById("dataframe_path");
     const columnInput = document.getElementById("column_input");
@@ -170,6 +189,15 @@ function mapProcess(jsonData) {
         process_mapping[jsonData[tag_name.textContent]] = action.textContent;
     });
     
-    eel.map_process(process_mapping, column, dataframe); 
+    if (!buildCompleted) {
+        // Call the build process only if it hasn't been completed yet
+        await eel.map_process(process_mapping, column, dataframe)();
+        buildCompleted = true; // Set the flag to true after build process
+    }
+    
+    runProcess(process_mapping, column, dataframe);
 }
 
+function runProcess(process_mapping, column, dataframe) {
+    eel.run_process(process_mapping, column, dataframe);
+}

@@ -6,26 +6,26 @@ import pandas as pd
 import tkinter as tk
 
 import mysql.connector
-from Scraper.LoopHandler import read_from_dataframe
+from Scraper.LoopHandler import read_from_dataframe, import_handler
 
 eel.init('templates')
 
 # connection to the database hosted on aws rds
 
-def connect_to_db():
-    try:
-        db_connection = mysql.connector.connect(
-            host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
-            user='DataBird',
-            password='databird1472023',
-            database='price_tracking_Database'
-        )
-        return db_connection
-    except Exception as e:
-        print("Error connecting to database:", e)
-        return None
+# def connect_to_db():
+#     try:
+#         db_connection = mysql.connector.connect(
+#             host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
+#             user='DataBird',
+#             password='databird1472023',
+#             database='price_tracking_Database'
+#         )
+#         return db_connection
+#     except Exception as e:
+#         print("Error connecting to database:", e)
+#         return None
 
-db_connection = connect_to_db()
+# db_connection = connect_to_db()
 
 def is_internet_available():
     try:
@@ -40,17 +40,32 @@ def check_and_start():
         eel.start('NoInternetPage.html', size=(1200, 600))
     else:
         eel.start('index.html', size=(1200, 600))
-
+global_driver = None
+global_url = None
 @eel.expose
 def init_driver(url = 'https://example.com'):
+    global global_driver
+    global global_url
     print("Function called from javascript, url requesetd = ",url)
-    driver = initialize_driver(url)
-    driver.get(url)
+    global_url = url
+    if global_driver is None:
+        global_driver = initialize_driver(url)
+
+    global_driver.get(url)
 
 @eel.expose
-def map_process(driver, mapping, column, df_path):
-    print("process mapping recieved: ", mapping, column, df_path)
-    read_from_dataframe(driver, df_path, column, mapping)
+def map_process(mapping, column, df_path):
+    print("process mapping recieved on build: ", mapping, column, df_path)
+    imported_actions = import_handler(mappings=mapping)
+    return imported_actions
+
+@eel.expose
+def run_process(mapping, column, df_path):
+    from Main.common import By
+    print("process mapping recieved on run: ", mapping, column, df_path)
+    imported_actions = import_handler(mappings=mapping)
+    global_driver.get(global_url)
+    read_from_dataframe(global_driver, df_path, column, mapping, imported_actions)
 
 @eel.expose 
 def getInfo(url):
