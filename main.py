@@ -81,6 +81,10 @@ def insert_product(product):
         raise e
     finally:
         cursor.close()
+@eel.expose
+def delete_product(product):
+    cursor = db_connection.cursor()
+    query = 'ALTER TABLE price_tracking_Database.tracked_products DELETE ROW ()'
 
 @eel.expose
 def itemsInDB():
@@ -98,7 +102,6 @@ if(is_internet_available()) :
 
 else: 
     eel.start('NoInternetPage.html',size =(1200,600))
-
 
 # const databaseProducts = getAllTrackedProducts();
 #         if(databaseProducts.length<=0) {
