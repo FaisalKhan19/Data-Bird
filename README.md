@@ -92,7 +92,7 @@ This project is licensed under the MIT License. For more details, refer to the [
 
 ## Contact
 
-For inquiries or suggestions, you can reach out via email: faisalk3996@gmail.com and reyan786@gmail.com .
+For inquiries or suggestions, you can reach out via email: faisalk3996@gmail.com and reyanabidin169@gmail.com .
 
 ## Screenshots
 
@@ -102,7 +102,7 @@ For inquiries or suggestions, you can reach out via email: faisalk3996@gmail.com
 ![Screenshot 4](Screenshots/screenshot(4).png)
 ![Screenshot 5](Screenshots/screenshot(5).png)
 <be/>
-by Syed Rehan Ali Kazmi
+by Mohd Rehan
 [Linkedin](https://www.linkedin.com/in/mohd-rehan-3744b6194/) | [GitHub](https://github.com/rehan-786)
 
 <br />
