@@ -45,7 +45,7 @@
             placeholder="Target Price ?" id="TargetPrice" font="Arial" required>
 
         <div class="main-page-button animate__animated animate__fadeInUp text-center" style='margin-top: 20px'>
-            <button class="btn btn-success btn-lg" id="Monitor">Monitor</button>
+            <button class="btn btn-gen btn-lg" id="Monitor">Monitor</button>
             <div class='row' id='empty-error'></div>
         </div>
     </div>
@@ -101,7 +101,7 @@
 
             const livePrice = await updateLivePrice(item);
             const cardDiv = document.createElement("div");
-            cardDiv.classList.add("col-md-2", "mb-2");
+            cardDiv.classList.add("col-md-2", "mb-2","card-container");
             cardDiv.setAttribute("data-title", item.title); // Set a custom attribute to identify the card
 
             const card = document.createElement("div");
@@ -120,8 +120,8 @@
             cardTitle.textContent = item.title;
 
             const cardPrice = document.createElement("h5");
-            cardPrice.classList.add("card-text", "card-price"); // Add Bootstrap class and custom class for styling
-            cardPrice.textContent = livePrice !== null ? `Current Price: ${livePrice}` : 'Price not available'; // Display appropriate message based on the livePrice value
+            cardPrice.classList.add("card-text", "card-price"); 
+            cardPrice.textContent = livePrice !== null ? `Current Price: ${livePrice}` : 'Price not available'; 
 
             cardBody.appendChild(cardTitle);
             cardBody.appendChild(cardPrice);
@@ -160,13 +160,13 @@
 
                 const loader = document.createElement("div");
                 loader.classList.add("spinner-border", "text-primary");
-                loader.style.margin = "auto"; // Center the loader
-                loader.style.display = "flex"; // Set display to flex
-                loader.style.alignItems = "center"; // Center vertically
-                loader.style.justifyContent = "center"; // Center horizontally
+                loader.style.margin = "auto"; 
+                loader.style.display = "flex"; 
+                loader.style.alignItems = "center"; 
+                loader.style.justifyContent = "center"; 
 
                 const cardDiv = document.createElement("div");
-                cardDiv.classList.add("col-md-2", "mb-2"); // Adjust the width of the card container
+                cardDiv.classList.add("col-md-2", "mb-2","card-container"); 
 
                 cardDiv.appendChild(loader);
 
@@ -189,23 +189,29 @@
                     const cardTitle = document.createElement("h5");
                     cardTitle.classList.add("card-title");
                     cardTitle.textContent = title;
+                    cardTitle.style.overflow = "hidden";
+                    cardTitle.style.textOverflow = "ellipsis";
+                    cardTitle.style.whiteSpace = "nowrap";
 
                     const cardPrice = document.createElement("h5");
                     cardPrice.classList.add("card-text");
                     cardPrice.textContent = `Current Price: ${price}`;
+                    cardPrice.style.overflow = "hidden";
+                    cardPrice.style.textOverflow = "ellipsis";
+                    cardPrice.style.whiteSpace = "nowrap";
 
                     cardBody.appendChild(cardTitle);
-                    cardBody.appendChild(cardPrice); // Append the price element
+                    cardBody.appendChild(cardPrice); 
                     card.appendChild(cardImage);
                     card.appendChild(cardBody);
-                    // Insert product data into the database using Eel
+                    
                     const insertedProductId = await insertProduct({
                         "product_name": title,
                         "image_url": imageUrl,
                         "target_price": parseInt(TargetPrice),
                         "product_url": url,
                     });
-                    cardDiv.innerHTML = ""; // Clear the cardDiv
+                    cardDiv.innerHTML = ""; 
                     cardDiv.appendChild(card);
                     await loadTrackedItems();
 
