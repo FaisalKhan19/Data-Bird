@@ -51,6 +51,7 @@ function updateSelectedItemDisplay() {
 const indicated_list = {};
 
 let selectedElement = null;
+let xpath = null;
 
 function handleMouseClick(event) {
 
@@ -63,7 +64,7 @@ function handleMouseClick(event) {
   // Handle confirming the selected element and saving to indicated_list
   if (target.getAttribute('id') == 'confirm-button') {
     if (selectedElement) {
-      indicated_list[selectedElement.tagName] = selectedElement.className.toLowerCase();
+      indicated_list[selectedElement.tagName] = xpath;
       unhighlightElement(selectedElement); // Remove highlight from the element
       selectedElement = null;
       updateSelectedItemDisplay();
@@ -77,6 +78,7 @@ function handleMouseClick(event) {
   // Set the clicked element as the selected element if it's not an overlay element
   if (!selectedElement && !target.classList.contains('overlay69')) {
     selectedElement = target;
+    xpath = getXPath(selectedElement);
     highlightElement(selectedElement);
     updateSelectedItemDisplay();
   }
@@ -240,4 +242,31 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
+
+function getXPath(element) {
+  if (element && element.nodeType === Node.ELEMENT_NODE) {
+      let xpath = '';
+      for (; element && element.nodeType === Node.ELEMENT_NODE; element = element.parentNode) {
+          let index = 0;
+          let hasFollowingSiblings = false;
+          for (let sibling = element.previousSibling; sibling; sibling = sibling.previousSibling) {
+              if (sibling.nodeType === Node.DOCUMENT_TYPE_NODE)
+                  continue;
+              if (sibling.nodeName === element.nodeName)
+                  ++index;
+          }
+          for (let sibling = element.nextSibling; sibling; sibling = sibling.nextSibling) {
+              if (sibling.nodeName === element.nodeName) {
+                  hasFollowingSiblings = true;
+                  break;
+              }
+          }
+          const tagName = element.nodeName.toLowerCase();
+          const suffix = (index || hasFollowingSiblings) ? `[${index + 1}]` : '';
+          xpath = '/' + tagName + suffix + xpath;
+      }
+      return xpath;
+  }
+  return '';
+}
 

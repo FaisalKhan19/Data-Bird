@@ -24,13 +24,17 @@ def read_from_dataframe(
     col_name,
     mappings,
     imported_actions,
-    work_dir="C://Users//Faisal Ali Khan",
+    By,
+    work_dir="C://Users//Faisal Ali Khan//Desktop//Desk Folders",
 ):
     import os
     path = os.path.normpath(df_path)
     import pandas as pd
     print(path)
-    df = pd.read_excel(path)
+    try:
+        df = pd.read_excel(path)
+    except:
+        df = pd.read_csv(path)
     for var in df[col_name]:
 
         for class_, task in mappings.items():
@@ -45,8 +49,14 @@ def read_from_dataframe(
                 hover_element = driver.find_element(By.CLASS_NAME, class_)
                 action_chain.move_to_element(hover_element).perform()
             elif task == "Scrape Table":
+                xpath = class_
+                print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+                print("Log from loop_handler",xpath)
+                print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+                table = driver.find_element(By.XPATH, xpath)
                 scrape_table = actions[task]
-                table = driver.find_element(By.CLASS_NAME, class_)
+                print(actions[task])
+                print("++++++++++++++++++++++++++++++++++++++++++++++++++")
                 scrape_table(table, "dataframe", work_dir)
             elif task == "Screenshot":
                 element = driver.find_element(By.CLASS_NAME, class_)
