@@ -206,4 +206,3 @@ async function fetchCurrentPrice(productUrl) {
     return price;
 }
 
-
