@@ -49,23 +49,31 @@ def init_driver(url = 'https://example.com'):
     print("Function called from javascript, url requesetd = ",url)
     global_url = url
     if global_driver is None:
-        global_driver = initialize_driver(url)
+        global_driver = initialize_driver()
 
-    global_driver.get(url)
+    try:
+        global_driver.get(url)
+    except:
+        global_driver = initialize_driver()
+        global_driver.get(url)
 
 @eel.expose
 def map_process(mapping, column, df_path):
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     print("process mapping recieved on build: ", mapping, column, df_path)
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     imported_actions = import_handler(mappings=mapping)
     return imported_actions
 
 @eel.expose
 def run_process(mapping, column, df_path):
     from Main.common import By
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     print("process mapping recieved on run: ", mapping, column, df_path)
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     imported_actions = import_handler(mappings=mapping)
     global_driver.get(global_url)
-    read_from_dataframe(global_driver, df_path, column, mapping, imported_actions)
+    read_from_dataframe(global_driver, df_path, column, mapping, imported_actions, By)
 
 @eel.expose 
 def getInfo(url):

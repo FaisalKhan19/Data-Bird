@@ -3,7 +3,7 @@ import sys
 
 # driver = None
 
-def initialize_driver(url):
+def initialize_driver():
     global driver
     # Create the Chrome WebDriver
     options = webdriver.ChromeOptions()
