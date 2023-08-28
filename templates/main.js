@@ -205,4 +205,13 @@ async function fetchCurrentPrice(productUrl) {
     const [imageUrl, title, price] = await eel.getInfo(productUrl)();
     return price;
 }
+const birdie_logo = document.getElementById('Bird-logo');
 
+function animatedBirdie() {
+    birdie_logo.style.animation = 'spin 2s linear'; // Apply the animation
+    setTimeout(() => {
+      birdie_logo.style.animation = ''; // Remove the animation
+    }, 2000); // Remove after 1.5 seconds
+}
+
+birdie_logo.addEventListener('click', animatedBirdie);
