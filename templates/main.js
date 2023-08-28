@@ -205,13 +205,18 @@ async function fetchCurrentPrice(productUrl) {
     const [imageUrl, title, price] = await eel.getInfo(productUrl)();
     return price;
 }
-const birdie_logo = document.getElementById('Bird-logo');
+const birdie_logo = document.getElementById('Bird-Logo');
 
-function animatedBirdie() {
-    birdie_logo.style.animation = 'spin 2s linear'; // Apply the animation
+function animateBirdFly() {
+    birdie_logo.style.animation = 'fly 5s ease-in-out'; // Apply the flying animation
     setTimeout(() => {
-      birdie_logo.style.animation = ''; // Remove the animation
-    }, 2000); // Remove after 1.5 seconds
-}
+      birdie_logo.style.animation = ''; // Reset the animation
+      birdie_logo.style.opacity = 1; // Reset opacity
+    }, 5000); // Reset after 5 seconds (animation duration)
+  
+    // Optionally, add fading animation here
+    birdie_logo.style.opacity = 0; // Start fading out
+    birdie_logo.style.transition = 'opacity 1s ease'; // Apply fading animation
+  }
 
-birdie_logo.addEventListener('click', animatedBirdie);
+birdie_logo.addEventListener('click', animateBirdFly);

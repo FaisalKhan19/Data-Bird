@@ -124,6 +124,13 @@ body {
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
-    100% { transform: rotate(1440deg); }
+    100% { transform: rotate(2000deg); }
 }
-    
+
+@keyframes fly {
+    0% { transform: translate(0, 0); opacity: 1; }
+    25% { transform: translate(-50px, -50px); }
+    50% { transform: translate(50px, -100px); }
+    75% { transform: translate(-50px, -150px); }
+    100% { transform: translate(0, 0); opacity: 0; }
+  }
