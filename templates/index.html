@@ -17,7 +17,7 @@
         <img src="NLDB.png" alt="TempLogo" class="my-5 img-fluid animate__animated animate__fadeInDown" id = 'Bird-Logo' height="500" width="500">
         <div class="main-page-button">
             <button class="btn btn-gen btn-lg index-button" onclick="openCredits()">Read Credits</button>
-            <button class="btn btn-gen btn-lg index-button" onclick="openScrapingPage()">Data Scraping Wizard</button>
+            <button class="btn btn-gen btn-lg index-button" onclick="injectScraperOverlay()">Data Scraping Wizard</button>
             <button class="btn btn-gen btn-lg index-button" onclick="openPriceTracker()">Price Tracking</button>
             <button class="btn btn-gen btn-lg index-button" onclick="openAPItoData()">API</button>
         </div>
@@ -41,7 +41,14 @@
         function openPriceTracker() {
             window.location.replace('Price_tracker_page.html');
         }
-        
+        function openProcess() {
+            window.location.replace('loadProcess.html');
+        }
+        function get_driver() {
+            var url = document.getElementById('urlInput').value;
+            console.log(url)
+            eel.init_driver(url);
+        }        
     </script>
 </body>
 </html>

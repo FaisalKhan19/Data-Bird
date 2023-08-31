@@ -1,7 +1,7 @@
 def import_handler(mappings={}):
     imported_actions = {}  # Create a dictionary to store imported actions
 
-    for activity, task in mappings.items():
+    for id, task in mappings.items():
         if task == "Type Into":
             from Actions.control import type_into
             imported_actions[task] = type_into

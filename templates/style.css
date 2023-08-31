@@ -150,3 +150,9 @@ body {
     background-color: #d9534f;
     color: white;
   }
+
+  .overlay-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
