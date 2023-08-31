@@ -128,112 +128,14 @@ if(is_internet_available()) :
 else: 
     eel.start('NoInternetPage.html',size =(1200,600))
 
-# const databaseProducts = getAllTrackedProducts();
-#         if(databaseProducts.length<=0) {
-#             trackingItemList.innerHTML = 'No items set to track...!!!';
-#         } 
-#         else if(databaseProducts.length>0) {
-#             databaseProducts.forEach(async item=>{
-#                 const loader = document.createElement("div");
-#                 loader.classList.add("spinner-border", "text-primary");
-#                 loader.style.margin = "auto"; // Center the loader
-#                 loader.style.display = "flex"; // Set display to flex
-#                 loader.style.alignItems = "center"; // Center vertically
-#                 loader.style.justifyContent = "center"; // Center horizontally
 
-#                 const cardDiv = document.createElement("div");
-#                 cardDiv.classList.add("col-md-2", "mb-2"); // Adjust the width of the card container
-                    
-#                 cardDiv.appendChild(loader);
 
-#                 trackingItemList.appendChild(cardDiv);
-#                 try {
-#                     const card = document.createElement('div');
-#                     card.classList.add("card");
+# @eel.expose
+# def check_price_all_items(product_url):
+#     try:
+#         cursor = db_connection.cursor()
 
-#                     const cardImage = document.createElement("img");
-#                     cardImage.classList.add("card-img-top");
-#                     cardImage.src = item.image_url;
-#                     cardImage.alt = 'Tracked Product Image';
-
-#                     const cardBody = document.createElement("div");
-#                     cardBody.classList.add("card-body");
-                
-#                     const cardTitle = document.createElement("h5");
-#                     cardTitle.classList.add("card-title");
-#                     cardTitle.textContent = item.product_name;
-
-#                     cardBody.appendChild(cardTitle);
-#                     card.appendChild(cardImage);
-#                     card.appendChild(cardBody);
-
-#                     cardDiv.innerHTML = ""; // Clear the cardDiv
-#                     cardDiv.appendChild(card);
-
-#                 }
-#                 catch(error) {
-#                     trackingItemList.removeChild(cardDiv);
-#                     console.error("some error occured!!!");
-#                 }
-#                 else {
-#                     console.log("Spme otjebe rrro ");
-#                 }
-
-#             })
-#         }
+#     except:
 
 
 
-
-
-# correct load 
-# async function loadTrackedItems() {
-#             const trackedItems = await getAllTrackedProducts();
-
-#             trackedItems.forEach(item => {
-#                 const cardDiv = document.createElement("div");
-#         cardDiv.classList.add("col-md-2", "mb-2"); // Adjust the width of the card container
-
-#         const card = document.createElement("div");
-#         card.classList.add("card");
-
-#         const cardImage = document.createElement("img");
-#         cardImage.classList.add("card-img-top");
-#         cardImage.src = item.image_url;
-#         cardImage.alt = 'Tracked Product Image';
-
-#         const cardBody = document.createElement("div");
-#         cardBody.classList.add("card-body");
-
-#         const cardTitle = document.createElement("h5");
-#         cardTitle.classList.add("card-title");
-#         cardTitle.textContent = item.product_name;
-
-#         const cardPrice = document.createElement("h5");
-#         cardPrice.classList.add("card-text");
-#         cardPrice.textContent = `Target Price: $${item.target_price}`;
-
-#         const cardLink = document.createElement("a");
-#         cardLink.classList.add("btn", "btn-primary");
-#         cardLink.href = item.product_url;
-#         cardLink.target = "_blank"; // Open link in a new tab
-#         cardLink.textContent = "View Product";
-
-#         cardBody.appendChild(cardTitle);
-#         cardBody.appendChild(cardPrice);
-#         cardBody.appendChild(cardLink);
-#         card.appendChild(cardImage);
-#         card.appendChild(cardBody);
-#         cardDiv.appendChild(card);
-
-#         trackingItemList.appendChild(cardDiv);
-#             });
-#         }
-
-# cron.schedule('0 0 * * *', async () => {
-#     const products = await getAllTrackedProducts();
-#     for (const product of products) {
-#         const currentPrice = await fetchCurrentPrice(product.productUrl);
-#         await updateProductCurrentPrice(product.id, currentPrice);
-#     }
-# });
