@@ -17,3 +17,13 @@ from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 import json
 import yaml
+import os
+
+def create_dirs(process_mappings,working_dir = "//"):
+    try:
+        os.chdir(working_dir)
+    except:
+        os.mkdir(working_dir)
+        os.chdir(working_dir)
+    for _, task in process_mappings:
+        os.mkdir(task)

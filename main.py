@@ -4,28 +4,29 @@ from driver import initialize_driver
 from bs4 import BeautifulSoup
 import pandas as pd
 import tkinter as tk
+from Main.common import create_dirs
 
-import mysql.connector
+# import mysql.connector
 from Scraper.LoopHandler import read_from_dataframe, import_handler
 
 eel.init('templates')
 
 # connection to the database hosted on aws rds
 
-def connect_to_db():
-    try:
-        db_connection = mysql.connector.connect(
-            host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
-            user='DataBird',
-            password='databird1472023',
-            database='price_tracking_Database'
-        )
-        return db_connection
-    except Exception as e:
-        print("Error connecting to database:", e)
-        return None
+# def connect_to_db():
+#     try:
+#         db_connection = mysql.connector.connect(
+#             host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
+#             user='DataBird',
+#             password='databird1472023',
+#             database='price_tracking_Database'
+#         )
+#         return db_connection
+#     except Exception as e:
+#         print("Error connecting to database:", e)
+#         return None
 
-db_connection = connect_to_db()
+# db_connection = connect_to_db()
 
 def is_internet_available():
     try:
@@ -58,11 +59,12 @@ def init_driver(url = 'https://example.com'):
         global_driver.get(url)
 
 @eel.expose
-def map_process(mapping, column, df_path):
+def map_process(mapping, column, df_path, working_dir="//"):
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     print("process mapping recieved on build: ", mapping, column, df_path)
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     imported_actions = import_handler(mappings=mapping)
+    create_dirs(working_dir)
     return imported_actions
 
 @eel.expose
@@ -115,7 +117,7 @@ def itemsInDB():
         cursor = db_connection.cursor()
         query = 'SELECT * FROM price_tracking_Database.tracked_products'
         cursor.execute(query)
-        rows = cursor.fetchall()  # Fetch all the rows
+        rows = cursor.fetchall()  # Fetch all the rowszz
         cursor.close()  # Close the cursor after fetching
         return rows
     except Exception as e:

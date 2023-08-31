@@ -64,10 +64,12 @@ function handleMouseClick(event) {
   // Handle confirming the selected element and saving to indicated_list
   if (target.getAttribute('id') == 'confirm-button') {
     if (selectedElement) {
-      indicated_list[selectedElement.tagName] = xpath;
+      const element_type = document.getElementById("element_type")
+      indicated_list[element_type.value] = xpath;
       unhighlightElement(selectedElement); // Remove highlight from the element
       selectedElement = null;
       updateSelectedItemDisplay();
+      element_type.value = "";
     }
   }
 
@@ -181,6 +183,8 @@ function injectOverlay() {
         <button id="hier-up" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Parent</button>
         <button id="hier-down" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Child</button>
         <button id="show-similar" class="overlay69 button69" style="background-color: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Show Similar</button>
+        <p>Element Name:</P>
+        <input type="text" id="element_type">
       </div>
     `;
 
