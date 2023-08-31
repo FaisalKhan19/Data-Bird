@@ -30,15 +30,15 @@ Output:
 
 """
 
-def identify(driver, class_name, type='text', scrape_dict = {}, specific = True):
+def identify(driver, XPATH, type='text', scrape_dict = {}, specific = True):
     
     if(specific):
-        scrape_dict[type] = class_name
+        scrape_dict[type] = XPATH
 
-    items = driver.find_elements(By.CLASS_NAME,class_name)
+    items = driver.find_elements(By.CLASS_NAME,XPATH)
     if iter(items):
         if(type=='card'):
-            scrape_dict[type] = class_name
+            scrape_dict[type] = XPATH
         parent_element = items[0].find_element(By.XPATH,'..')
         try:
             if(parent_element.tag_name=='ul'):
@@ -55,7 +55,7 @@ def identify(driver, class_name, type='text', scrape_dict = {}, specific = True)
 
     return scrape_dict
 
-def cards(driver, class_name, type='text', scrape_dict = {},card_dict = {}):
-    dict = identify(driver, class_name, type, scrape_dict)
+def cards(driver, XPATH, type='text', scrape_dict = {},card_dict = {}):
+    dict = identify(driver, XPATH, type, scrape_dict)
     card_dict['card'] = dict
     return card_dict

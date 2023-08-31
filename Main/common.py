@@ -19,7 +19,7 @@ import json
 import yaml
 import os
 
-def create_dirs(process_mappings,working_dir = "//"):
+def create_dirs(process_mappings,working_dir = "C://Users//Faisal Ali Khan//Data-Bird"):
     try:
         os.chdir(working_dir)
     except:
