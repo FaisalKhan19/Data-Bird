@@ -134,3 +134,19 @@ body {
     75% { transform: translate(-50px, -150px); }
     100% { transform: translate(0, 0); opacity: 0; }
   }
+
+  .delete-icon-container {
+    display: flex;
+    justify-content: flex-end; 
+    padding: 5px; 
+  }
+  
+  .delete-icon {
+    width: 25px; 
+    height: 25px;
+    cursor: pointer;
+  }
+  .btn-danger {
+    background-color: #d9534f;
+    color: white;
+  }

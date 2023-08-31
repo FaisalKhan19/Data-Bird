@@ -25,7 +25,7 @@ def connect_to_db():
         print("Error connecting to database:", e)
         return None
 
-db_connection = connect_to_db()
+# db_connection = connect_to_db()
 
 def is_internet_available():
     try:
@@ -84,16 +84,21 @@ def getInfo(url):
 
     url_Image = imageURL.get('src')
     title = soup.find('span',class_= 'B_NuCI').text
-    price = soup.find('div',class_='_30jeq3 _16Jk6d').text
 
+    price = soup.find('div',class_='_30jeq3 _16Jk6d').text
+    price = price.replace("₹","")
+    price = price.replace(",","")
+    price = int(price)
+    print("product name",title," price is ",price)
     return url_Image, title, price
 
 @eel.expose
 def insert_product(product):
     try:
+        db_connection = connect_to_db()
         cursor = db_connection.cursor()
-        query = 'INSERT INTO price_tracking_Database.tracked_products (product_name, product_url, target_price, image_url) VALUES (%s, %s, %s, %s)'
-        values = (product['product_name'], product['product_url'], product['target_price'], product['image_url'])
+        query = 'INSERT INTO price_tracking_Database.tracked_products (product_name, product_url, target_price, image_url, current_price) VALUES (%s, %s, %s, %s, %s)'
+        values = (product['product_name'], product['product_url'], product['target_price'], product['image_url'], product['current_price'])
         cursor.execute(query, values)
         db_connection.commit()
         print("Successulyyy Inserted the data into the database")
@@ -104,14 +109,23 @@ def insert_product(product):
         raise e
     finally:
         cursor.close()
+
 @eel.expose
-def delete_product(product):
-    cursor = db_connection.cursor()
-    query = 'ALTER TABLE price_tracking_Database.tracked_products DELETE ROW ()'
+def delete_product(productId):
+    try:
+        db_connection = connect_to_db()
+        cursor = db_connection.cursor()
+        Delete_query = '''DELETE FROM tracked_products WHERE id = %s;'''
+        cursor.execute(Delete_query,(productId,))
+        db_connection.commit()
+        return True;
+    except: 
+        return False;
 
 @eel.expose
 def itemsInDB():
     try:
+        db_connection = connect_to_db()
         cursor = db_connection.cursor()
         query = 'SELECT * FROM price_tracking_Database.tracked_products'
         cursor.execute(query)
@@ -120,6 +134,8 @@ def itemsInDB():
         return rows
     except Exception as e:
         print("Something went wrong:", str(e))
+
+
 if(is_internet_available()) :
     eel.start('index.html', size=(1200, 600))
 

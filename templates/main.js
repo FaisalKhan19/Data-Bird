@@ -143,7 +143,7 @@ async function getAllTrackedProducts() {
         return trackedItemsL;
     }
     catch(error) {
-        console.error("Encountered Error while retreiving data from the server!!!",error);
+        console.error("Encountered Error while retreiving data from the Database!!!",error);
         throw error;
 
     }
@@ -172,13 +172,35 @@ async function loadTrackedItems() {
             const cardBody = document.createElement("div");
             cardBody.classList.add("card-body");
 
+            const deleteButton = document.createElement("button");
+            deleteButton.classList.add("btn", "btn-danger");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener('click', async ()=> {
+
+                const productId = item[0];
+                alert("You are trying to delete the product with the title :  "+item[1]);
+
+                const deleted = await eel.delete_product(productId)();
+                if(deleted) {
+                    alert("Successfully Deleted the product with title "+item[1]+" from the Database");
+                    await loadTrackedItems();
+                }
+                else {
+                    alert("Oops! Something or the other went wrong while deleting the product with the given ID ");
+                }
+            })
+
             const cardTitle = document.createElement("h5");
             cardTitle.classList.add("card-title");
             cardTitle.textContent = item[1]; 
 
-            const cardPrice = document.createElement("h5");
-            cardPrice.classList.add("card-text");
-            cardPrice.textContent = `Target Price: INR ${parseInt(item[3])}`; 
+            const cardTPrice = document.createElement("h5");
+            cardTPrice.classList.add("card-text");
+            cardTPrice.textContent = `Target Price: INR ${parseInt(item[3])}`; 
+
+            const cardCPrice = document.createElement("h5");
+            cardCPrice.classList.add("card-text");
+            cardCPrice.textContent = `Current Price: INR ${parseInt(item[5])}`; 
 
             const cardLink = document.createElement("a");
             cardLink.classList.add("btn", "btn-primary");
@@ -187,13 +209,16 @@ async function loadTrackedItems() {
             cardLink.textContent = "View Product";
 
             cardBody.appendChild(cardTitle);
-            cardBody.appendChild(cardPrice);
+            cardBody.appendChild(cardTPrice);
+            cardBody.appendChild(cardCPrice);
             cardBody.appendChild(cardLink);
+            cardBody.appendChild(deleteButton);
             card.appendChild(cardImage);
             card.appendChild(cardBody);
             cardDiv.appendChild(card);
-
+            
             trackingItemList.appendChild(cardDiv);
+
         });
     } catch (error) {
         console.error('Error loading tracked items:', error);
