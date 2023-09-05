@@ -57,6 +57,8 @@ function handleMouseClick(event) {
 
   const target = event.target;
   if (target.getAttribute('id') == 'save-button') {
+    var currURL = window.location.href;
+    indicated_list["URL"] = currURL;
     saveJsonToFile(indicated_list, 'indicated.json')
     unhighlightElement(selectedElement);
   }
@@ -64,7 +66,6 @@ function handleMouseClick(event) {
   // Handle confirming the selected element and saving to indicated_list
   if (target.getAttribute('id') == 'confirm-button') {
     if (selectedElement) {
-      const element_type = document.getElementById("element_type")
       indicated_list[element_type.value] = xpath;
       unhighlightElement(selectedElement); // Remove highlight from the element
       selectedElement = null;

@@ -140,3 +140,12 @@ body {
     top: 5px;
     right: 5px;
 }
+
+.overlay-create-close, .overlay-create-url {
+    padding: 10px;
+}
+
+.overlay-form-container{
+    display: flex;
+    flex-direction: row;
+}

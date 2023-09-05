@@ -265,15 +265,19 @@ function injectInputURLOverlay() {
     overlayContainer_sub.style.zIndex = '9999';
     overlayContainer_sub.style.borderRadius = '8px';
     overlayContainer_sub.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.5)';
-    overlayContainer_sub.style.padding = '20px';
 
     overlayContainer_sub.innerHTML = `
         <div id="overlay-content" class="overlay69 container69">
-            <button id="overlayclose" class="closeoverlay btn btn-gen btn-lg index-button overlay-close" onclick="closeOverlay_sub()">&times;</button>
-            <div class="main-page-button">
+            <div class="overlay-create-close">
+                <button id="overlayclose" class="closeoverlay btn btn-gen btn-lg index-button overlay-close" onclick="closeOverlay_sub()">&times;</button>
+            </div>    
+            <div class="main-page-button overlay-create-url">
                 <p>Enter URL</P>
-                <input type="url" class="form-control rounded-input" id="urlInput" placeholder="https://www.example.com">
-                <button class="btn btn-primary go-button" onclick="get_driver()" style = "margin-left: 10px;">Go</button>
+                <div class="overlay-form-container">
+                    <input type="url" class="form-control rounded-input-overlay" id="urlInput" placeholder="https://www.example.com">
+                    <button class="btn btn-primary go-button" onclick="get_driver()" style = "margin-left: 10px;">Go</button>
+                </div>
+                <button class="btn btn-warning close-driver-button" onclick="quit_driver()" style = "margin-top: 5px;">Quit Driver</button>
             </div>
         </div>
     `;
