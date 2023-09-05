@@ -30,7 +30,7 @@
 <body>
     <div class="container text-center">
         <img src="NLDB.png" alt="Data Bird Logo" class="my-5 img-fluid animate__animated animate__fadeIn"
-            height=300 width=300>
+        id = 'Bird-Logo' height=300 width=300>
         <h3 class="animate__animated animate__fadeIn">Price Tracker</h3>
         <p class="animate__animated animate__fadeIn" style="margin-top: 20px; font-size: 18px;">Currently supports
             Flipkart for price tracking</p>
@@ -102,7 +102,7 @@
             const livePrice = await updateLivePrice(item);
             const cardDiv = document.createElement("div");
             cardDiv.classList.add("col-md-2", "mb-2","card-container");
-            cardDiv.setAttribute("data-title", item.title); // Set a custom attribute to identify the card
+            cardDiv.setAttribute("data-title", item.title); 
 
             const card = document.createElement("div");
             card.classList.add("card");
@@ -210,6 +210,7 @@
                         "image_url": imageUrl,
                         "target_price": parseInt(TargetPrice),
                         "product_url": url,
+                        "current_price": price
                     });
                     cardDiv.innerHTML = ""; 
                     cardDiv.appendChild(card);

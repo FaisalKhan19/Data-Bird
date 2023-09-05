@@ -135,7 +135,23 @@ body {
     100% { transform: translate(0, 0); opacity: 0; }
   }
 
-.overlay-close {
+  .delete-icon-container {
+    display: flex;
+    justify-content: flex-end; 
+    padding: 5px; 
+  }
+  
+  .delete-icon {
+    width: 25px; 
+    height: 25px;
+    cursor: pointer;
+  }
+  .btn-danger {
+    background-color: #d9534f;
+    color: white;
+  }
+
+  .overlay-close {
     position: absolute;
     top: 5px;
     right: 5px;
