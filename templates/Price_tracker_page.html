@@ -43,6 +43,10 @@
         <input type="text" class="form-control rounded-input Target-Price"
             style="max-width: 400px; text-align: center; display: flex; justify-content: center; align-items: center; padding-top: 100"
             placeholder="Target Price ?" id="TargetPrice" font="Arial" required>
+        <input type="text" class="form-control rounded-input user-id"
+            style="max-width: 400px; text-align: center; display: flex; justify-content: center; align-items: center; padding-top: 100"
+            placeholder="your email-id ?" id="emailId" font="Arial" required>
+        
 
         <div class="main-page-button animate__animated animate__fadeInUp text-center" style='margin-top: 20px'>
             <button class="btn btn-gen btn-lg" id="Monitor">Monitor</button>
@@ -129,7 +133,6 @@
             card.appendChild(cardBody);
             cardDiv.appendChild(card);
 
-            // Update the live price for each pre-tracked item
 
 
             cardDiv.addEventListener("click", () => {

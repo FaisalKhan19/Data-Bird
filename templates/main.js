@@ -194,9 +194,13 @@ async function loadTrackedItems() {
             cardTitle.classList.add("card-title");
             cardTitle.textContent = item[1];
 
-            const cardPrice = document.createElement("h5");
-            cardPrice.classList.add("card-text");
-            cardPrice.textContent = `Target Price: INR ${parseInt(item[3])}`; 
+            const cardCPrice = document.createElement("h5");
+            cardCPrice.classList.add("card-text");
+            cardCPrice.textContent = `Current Price: INR ${parseInt(item[4])}`; 
+
+            const cardTPrice = document.createElement("h5");
+            cardTPrice.classList.add("card-text");
+            cardTPrice.textContent = `Target Price: INR ${parseInt(item[3])}`; 
 
             const cardLink = document.createElement("a");
             cardLink.classList.add("btn", "btn-primary");
