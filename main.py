@@ -4,12 +4,12 @@ from driver import initialize_driver
 from bs4 import BeautifulSoup
 import pandas as pd
 import tkinter as tk
-from Main.common import create_dirs
+from Main.common import create_dirs, By
+import time
 
 import mysql.connector
+import mysql.connector
 from Scraper.LoopHandler import read_from_dataframe, import_handler
-
-eel.init('templates')
 
 # connection to the database hosted on aws rds
 
@@ -25,7 +25,20 @@ def connect_to_db():
     except Exception as e:
         print("Error connecting to database:", e)
         return None
+def connect_to_db():
+    try:
+        db_connection = mysql.connector.connect(
+            host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
+            user='DataBird',
+            password='databird1472023',
+            database='price_tracking_Database'
+        )
+        return db_connection
+    except Exception as e:
+        print("Error connecting to database:", e)
+        return None
 
+db_connection = connect_to_db()
 db_connection = connect_to_db()
 
 def is_internet_available():
@@ -41,41 +54,59 @@ def check_and_start():
         eel.start('NoInternetPage.html', size=(1200, 600))
     else:
         eel.start('index.html', size=(1200, 600))
-global_driver = None
-global_url = None
-@eel.expose
-def init_driver(url = 'https://example.com'):
-    global global_driver
-    global global_url
-    print("Function called from javascript, url requesetd = ",url)
-    global_url = url
-    if global_driver is None:
-        global_driver = initialize_driver()
 
-    try:
-        global_driver.get(url)
-    except:
-        global_driver = initialize_driver()
-        global_driver.get(url)
+class WebAutomation:
+    def __init__(self):
+        self.global_driver = None
+
+    def init_driver(self, url='https://example.com'):
+        print("Function called from JavaScript, URL requested =", url)
+        self.global_driver = initialize_driver()
+        self.global_driver.get(url)
+
+    def quit_driver(self):
+        try:
+            self.global_driver.quit()
+            return
+        except:
+            return
+
+    def map_process(self, mapping, column, df_path, working_dir="C://Users//Faisal Ali Khan//Data-Bird"):
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+        print("Process mapping received on build:", mapping, column, df_path)
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+        imported_actions = import_handler(mappings=mapping)
+        create_dirs(mapping, working_dir)
+        return imported_actions
+
+    def run_process(self, mapping, names_mapping, column, df_path, working_dir="C://Users//Faisal Ali Khan//Data-Bird"):
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+        print("Process mapping received on run:", mapping, column, df_path)
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+        imported_actions = import_handler(mappings=mapping)
+        # self.global_driver.get(global_url)  # Uncomment if global_url is defined somewhere
+        read_from_dataframe(self.global_driver, df_path, column, mapping, imported_actions, names_mapping, By, working_dir)
 
 @eel.expose
-def map_process(mapping, column, df_path, working_dir="//"):
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-    print("process mapping recieved on build: ", mapping, column, df_path)
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-    imported_actions = import_handler(mappings=mapping)
-    create_dirs(working_dir)
-    return imported_actions
+def init_driver(url = "https://www.example.com"):
+    global webAutomation
+    webAutomation.init_driver(url)
+    time.sleep(5)
 
 @eel.expose
-def run_process(mapping, column, df_path):
-    from Main.common import By
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-    print("process mapping recieved on run: ", mapping, column, df_path)
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-    imported_actions = import_handler(mappings=mapping)
-    global_driver.get(global_url)
-    read_from_dataframe(global_driver, df_path, column, mapping, imported_actions, By)
+def quit_driver():
+    global webAutomation
+    webAutomation.quit_driver()
+
+@eel.expose
+def map_process(mapping, column, df_path, working_dir="C://Users//Faisal Ali Khan//Data-Bird"):
+    global webAutomation
+    webAutomation.map_process(mapping, column, df_path, working_dir)
+
+@eel.expose
+def run_process(mapping, names_mapping, column, df_path):
+    global webAutomation
+    webAutomation.run_process(mapping, names_mapping, column, df_path)
 
 @eel.expose 
 def getInfo(url):
@@ -137,12 +168,14 @@ def itemsInDB():
     except Exception as e:
         print("Something went wrong:", str(e))
 
+if __name__ == "__main__":
+    eel.init('templates')
+    webAutomation = WebAutomation()
+    if(is_internet_available()) :
+        eel.start('index.html', size=(1200, 600))
 
-if(is_internet_available()) :
-    eel.start('index.html', size=(1200, 600))
-
-else: 
-    eel.start('NoInternetPage.html',size =(1200,600))
+    else: 
+        eel.start('NoInternetPage.html',size =(1200,600))
 
 
 

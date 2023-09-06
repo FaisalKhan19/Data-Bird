@@ -80,20 +80,25 @@ function generateVisualization(jsonData) {
 
     // Iterate through JSON data and create elements
     for (const tagName in jsonData) {
-        // Create a container for each entry
-        const entryContainer = document.createElement("div");
-        const placeholder = document.createElement('span');
-        entryContainer.classList.add("entry-container");
-        placeholder.classList.add('placeholder');
+        if(tagName == "URL"){
 
-        const tagElement = document.createElement("button");
-        tagElement.classList.add("tag-element");
-        tagElement.textContent = tagName;
+        }
+        else{
+            // Create a container for each entry
+            const entryContainer = document.createElement("div");
+            const placeholder = document.createElement('span');
+            entryContainer.classList.add("entry-container");
+            placeholder.classList.add('placeholder');
 
-        entryContainer.appendChild(placeholder);
-        entryContainer.appendChild(tagElement);
+            const tagElement = document.createElement("button");
+            tagElement.classList.add("tag-element");
+            tagElement.textContent = tagName;
 
-        dynamicContentContainer.appendChild(entryContainer);
+            entryContainer.appendChild(placeholder);
+            entryContainer.appendChild(tagElement);
+
+            dynamicContentContainer.appendChild(entryContainer);
+        }
     }
     addDropBehavior();
 }
@@ -178,15 +183,19 @@ async function mapProcess(jsonData) {
     const containers = document.querySelectorAll(".entry-container");
     const dataframeInput = document.getElementById("dataframe_path");
     const columnInput = document.getElementById("column_input");
+    
     const process_mapping = {};
+    const names_mapping = {};
     
     const dataframe = dataframeInput.value;
     const column = columnInput.value;
-        
+    
     containers.forEach(container => {
         const action = container.querySelector('.drag-element');
         const tag_name = container.querySelector('.tag-element');
+
         process_mapping[jsonData[tag_name.textContent]] = action.textContent;
+        names_mapping[jsonData[tag_name.textContent]] = tag_name.textContent;
     });
     
     if (!buildCompleted) {
@@ -195,9 +204,10 @@ async function mapProcess(jsonData) {
         buildCompleted = true; // Set the flag to true after build process
     }
     
-    runProcess(process_mapping, column, dataframe);
+    eel.init_driver(jsonData["URL"]);
+    runProcess(process_mapping, names_mapping, column, dataframe);
 }
 
-function runProcess(process_mapping, column, dataframe) {
-    eel.run_process(process_mapping, column, dataframe);
+function runProcess(process_mapping, names_mapping, column, dataframe) {
+    eel.run_process(process_mapping, names_mapping, column, dataframe);
 }

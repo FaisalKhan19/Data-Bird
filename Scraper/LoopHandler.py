@@ -10,7 +10,6 @@ def import_handler(mappings={}):
 
             imported_actions[task] = ActionChains
         elif task == "Scrape Table":
-            from Main.common import By, pd, json, yaml
             from Scraper.structural import scrape_table
 
             imported_actions[task] = scrape_table
@@ -24,10 +23,12 @@ def read_from_dataframe(
     col_name,
     mappings,
     imported_actions,
+    names_mapping,
     By,
     work_dir="C://Users//Faisal Ali Khan//Desktop//Desk Folders",
 ):
     import os
+    from Main.common import WebDriverWait, EC
     path = os.path.normpath(df_path)
     import pandas as pd
     print(path)
@@ -53,11 +54,11 @@ def read_from_dataframe(
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++")
                 print("Log from loop_handler",xpath)
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-                table = driver.find_element(By.XPATH, xpath)
+                table = WebDriverWait(driver,15).until(EC.presence_of_element_located((By.XPATH, xpath)))
                 scrape_table = actions[task]
                 print(actions[task])
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-                scrape_table(table, "dataframe", work_dir)
+                scrape_table(table, "dataframe", work_dir, names_mapping[class_], var)
             elif task == "Screenshot":
                 element = driver.find_element(By.CLASS_NAME, class_)
                 element.screenshot("image_sc.png")
