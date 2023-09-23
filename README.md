@@ -97,6 +97,7 @@ For inquiries or suggestions, you can reach out via email: faisalk3996@gmail.com
 ## Screenshots
 
 ![Screenshot 1](Screenshots/screenshot(1).png)
+![Sceenshot 1](Screenshots/API2DATa.png)
 ![Screenshot 2](Screenshots/screenshot(2).png)
 ![Screenshot 3](Screenshots/screenshot(3).png)
 ![Screenshot 4](Screenshots/screenshot(4).png)
