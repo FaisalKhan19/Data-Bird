@@ -97,11 +97,11 @@ For inquiries or suggestions, you can reach out via email: faisalk3996@gmail.com
 ## Screenshots
 
 ![Screenshot 1](Screenshots/screenshot(1).png)
-![Sceenshot 1](Screenshots/API2DATa.png)
-![Screenshot 2](Screenshots/screenshot(2).png)
-![Screenshot 3](Screenshots/screenshot(3).png)
-![Screenshot 4](Screenshots/screenshot(4).png)
-![Screenshot 5](Screenshots/screenshot(5).png)
+![Screenshot 2](Screenshots/API2DAta.png)
+![Screenshot 3](Screenshots/screenshot(2).png)
+![Screenshot 4](Screenshots/screenshot(3).png)
+![Screenshot 5](Screenshots/screenshot(4).png)
+![Screenshot 6](Screenshots/screenshot(5).png)
 
 <be/>
 by Mohd Rehan
