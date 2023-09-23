@@ -25,20 +25,7 @@ def connect_to_db():
     except Exception as e:
         print("Error connecting to database:", e)
         return None
-def connect_to_db():
-    try:
-        db_connection = mysql.connector.connect(
-            host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
-            user='DataBird',
-            password='databird1472023',
-            database='price_tracking_Database'
-        )
-        return db_connection
-    except Exception as e:
-        print("Error connecting to database:", e)
-        return None
 
-db_connection = connect_to_db()
 db_connection = connect_to_db()
 
 def is_internet_available():
