@@ -1,14 +1,14 @@
-document.getElementById("load-json-button-workspace").addEventListener("click", function () {
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = ".json";
-    fileInput.addEventListener("change", handleFileSelection);
-    fileInput.click();
-    load_button = document.getElementById("load-json-button-workspace");
-    h2 = document.getElementById("load-process-text")
-    document.getElementById('workspace-container').removeChild(load_button);
-    document.getElementById('workspace-container').removeChild(h2);
-});
+// document.getElementById("load-json-button-workspace").addEventListener("click", function () {
+//     const fileInput = document.createElement("input");
+//     fileInput.type = "file";
+//     fileInput.accept = ".json";
+//     fileInput.addEventListener("change", handleFileSelection);
+//     fileInput.click();
+//     load_button = document.getElementById("load-json-button-workspace");
+//     h2 = document.getElementById("load-process-text")
+//     document.getElementById('workspace-container').removeChild(load_button);
+//     document.getElementById('workspace-container').removeChild(h2);
+// });
 
 document.getElementById("load-json-button").addEventListener("click", function () {
     const fileInput = document.createElement("input");
@@ -16,11 +16,13 @@ document.getElementById("load-json-button").addEventListener("click", function (
     fileInput.accept = ".json";
     fileInput.addEventListener("change", handleFileSelection);
     fileInput.click();
-    load_button = document.getElementById("load-json-button-workspace");
-    h2 = document.getElementById("load-process-text")
-    document.getElementById('workspace-container').removeChild(load_button);
-    document.getElementById('workspace-container').removeChild(h2);
+    // load_button = document.getElementById("load-json-button-workspace");
+    // h2 = document.getElementById("load-process-text")
+    // document.getElementById('workspace-container').removeChild(load_button);
+    // document.getElementById('workspace-container').removeChild(h2);
 });
+
+
 
 function handleFileSelection(event) {
     const file = event.target.files[0];
@@ -33,7 +35,7 @@ function handleFileSelection(event) {
             const jsonData = JSON.parse(content);
             generateVisualization(jsonData);
             manage_class(jsonData);
-            document.getElementById("build").addEventListener('click', function() {
+            document.getElementById("build").addEventListener('click', function () {
                 mapProcess(jsonData);
             });
             const run_button = document.getElementById("run");
@@ -71,36 +73,44 @@ function manage_class(jsonData) {
     }
 }
 
+const dynamicContentContainer = document.getElementById("dynamicContentContainer");
+dynamicContentContainer.appendChild(createStepGUI("Use Browser", 'step-container'));
+addDropBehavior();
+const stepBody = document.getElementById("stepBody");
 // Function to dynamically generate the visualization
 function generateVisualization(jsonData) {
-    const dynamicContentContainer = document.getElementById("dynamicContentContainer");
-
+    console.log(stepBody);
     // Clear any existing content
-    dynamicContentContainer.innerHTML = "";
 
     // Iterate through JSON data and create elements
     for (const tagName in jsonData) {
-        if(tagName == "URL"){
+        if (tagName == "URL") {
 
         }
-        else{
+        else {
             // Create a container for each entry
-            const entryContainer = document.createElement("div");
-            const placeholder = document.createElement('span');
-            entryContainer.classList.add("entry-container");
-            placeholder.classList.add('placeholder');
-
-            const tagElement = document.createElement("button");
-            tagElement.classList.add("tag-element");
-            tagElement.textContent = tagName;
-
-            entryContainer.appendChild(placeholder);
-            entryContainer.appendChild(tagElement);
-
-            dynamicContentContainer.appendChild(entryContainer);
+            var step = createStepGUI(tagName, "nested-step-container");
+            console.log(step);
+            stepBody.appendChild(step);
         }
     }
     addDropBehavior();
+    console.log(stepBody);
+}
+
+function createStepGUI(stepName, classname){
+
+    const stepContainer = document.createElement('div');
+    stepContainer.classList.add(classname);
+
+    stepContainer.innerHTML = `
+    <header class='step-header'>
+      <span>${stepName}</span>
+    </header>
+    <div id="stepBody" class='step-body ${stepName}'>
+    </div>
+    `;
+    return stepContainer;
 }
 
 function addDraggableBehavior() {
@@ -118,7 +128,7 @@ function addDraggableBehavior() {
 addDraggableBehavior();
 
 function addDropBehavior() {
-    const dragTargets = document.querySelectorAll(".entry-container");
+    const dragTargets = document.querySelectorAll(".step-body");
 
     dragTargets.forEach(dragTarget => {
         dragTarget.addEventListener('dragover', (event) => {
@@ -138,21 +148,19 @@ function addDropBehavior() {
             const draggedData = event.dataTransfer.getData('text/plain');
 
             // Create a new element to display the dropped data
-            const droppedElement = document.createElement('div');
-            droppedElement.textContent = `${draggedData}`;
-            droppedElement.classList.add('drag-element');
+            const droppedElement = createStepGUI(draggedData, 'nested-step-container');
             // droppedElement.style.backgroundColor = '#27ae60'; // Custom color
 
             // Check if the event target is the entry-container
-            if (event.target.classList.contains('entry-container')) {
-                const placeholderElement = event.target.querySelector('.placeholder');
+            if (event.target.classList.contains('step-body')) {
                 // Insert the new element before the placeholder
-                event.target.insertBefore(droppedElement, placeholderElement);
+                event.target.appendChild(droppedElement);
             }
-            
+
             event.target.classList.remove('drag-over'); // Remove the visual indication class
-            if(draggedData == 'Type Into'){
-                add_readFrom(dragTarget);
+            if (draggedData == 'Type Into') {
+                var typeInto = document.querySelector('.Type')
+                add_readFrom(typeInto);
             };
         });
     });
@@ -183,13 +191,13 @@ async function mapProcess(jsonData) {
     const containers = document.querySelectorAll(".entry-container");
     const dataframeInput = document.getElementById("dataframe_path");
     const columnInput = document.getElementById("column_input");
-    
+
     const process_mapping = {};
     const names_mapping = {};
-    
+
     const dataframe = dataframeInput.value;
     const column = columnInput.value;
-    
+
     containers.forEach(container => {
         const action = container.querySelector('.drag-element');
         const tag_name = container.querySelector('.tag-element');
@@ -197,17 +205,73 @@ async function mapProcess(jsonData) {
         process_mapping[jsonData[tag_name.textContent]] = action.textContent;
         names_mapping[jsonData[tag_name.textContent]] = tag_name.textContent;
     });
-    
+
     if (!buildCompleted) {
         // Call the build process only if it hasn't been completed yet
         await eel.map_process(process_mapping, column, dataframe)();
         buildCompleted = true; // Set the flag to true after build process
     }
-    
+
     eel.init_driver(jsonData["URL"]);
     runProcess(process_mapping, names_mapping, column, dataframe);
 }
 
 function runProcess(process_mapping, names_mapping, column, dataframe) {
     eel.run_process(process_mapping, names_mapping, column, dataframe);
+}
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+var openDropdown = null;
+
+document.querySelectorAll(".dropbtn").forEach(dropbtn => {
+    dropbtn.addEventListener('click', (event) => {
+        var dropmenu = event.target.textContent;
+        var dropdown = document.getElementById(`myDropdown-${dropmenu}`);
+        if (openDropdown !== dropdown) {
+            if (openDropdown) {
+                openDropdown.classList.remove("show");
+            }
+            dropdown.classList.toggle("show");
+            openDropdown = dropdown;
+        } else {
+            dropdown.classList.toggle("show");
+            openDropdown = dropdown.classList.contains("show") ? dropdown : null;
+        }
+    });
+});
+
+function ActivateHover() {
+    document.querySelectorAll(".dropbtn").forEach(dropbtn => {
+        var name = null
+        dropbtn.addEventListener('mouseenter', (event) => {
+            name = event.target.textContent;
+            if (openDropdown) {
+                openDropdown.classList.toggle("show");
+            }
+            var dropmenu = event.target.textContent;
+            document.getElementById(`myDropdown-${dropmenu}`).classList.toggle("show");
+        });
+    });
+}
+
+
+// function myFunction() {
+//     var item_class = "dropdown-content-" + event
+//     console.log(item_class);
+//     document.getElementById("myDropdown").classList.toggle("show");
+// }
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function closeDropdown(event) {
+    if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
 }

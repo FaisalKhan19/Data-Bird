@@ -97,6 +97,7 @@
          display: block;
      }
  }
+
  /* .tag-element {
     position: relative;
     right: -58px;
@@ -108,26 +109,104 @@
  }
 
  .drag-over {
-    background-color: #80f5f7;
+     background-color: #80f5f7;
  }
 
  /* Added styles for the layout */
-/* .wizard-container {
+ /* .wizard-container {
     display: flex;
     flex-grow: 1;
 } */
 
-/* .sidebar {
+ /* .sidebar {
     position: fixed;
     overflow-y: auto;
 } */
 
-.workspace-container {
-    overflow: auto;
-}
+ .workspace-container {
+     overflow: auto;
+ }
 
-.nav-button {
-    padding-left: 8px;
-    padding-right: 8px;
-}
+ .nav-button {
+     padding-left: 8px;
+     padding-right: 8px;
+ }
 
+ /* CSS for drop-down menus
+/* Dropdown Button */
+ .dropbtn {
+     background-color: #F8F9FA;
+     color: #000000A6;
+     padding: 8px;
+     font-size: 16px;
+     border: none;
+     cursor: pointer;
+ }
+
+ /* Dropdown button on hover & focus */
+ .dropbtn:hover,
+ .dropbtn:focus {
+     background-color: #F8F9FA;
+ }
+
+ /* The container <div> - needed to position the dropdown content */
+ .dropdown {
+     position: relative;
+     display: inline-block;
+ }
+
+ /* Dropdown Content (Hidden by Default) */
+ .dropdown-content {
+     display: none;
+     position: absolute;
+     background-color: #f1f1f1;
+     min-width: 160px;
+     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+     z-index: 1;
+ }
+
+ /* Links inside the dropdown */
+ .dropdown-content a {
+     color: black;
+     padding: 12px 16px;
+     text-decoration: none;
+     display: block;
+ }
+
+ /* Change color of dropdown links on hover */
+ .dropdown-content a:hover {
+     background-color: #ddd;
+ }
+
+ /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+ .show {
+     display: block;
+ }
+
+ .step-container {
+     /* height: 150px; */
+     width: 400px;
+     border-style: ridge;
+     display: flex;
+     flex-direction: column;
+ }
+
+ .step-header {
+     border-style: groove;
+     background: Grey;
+ }
+
+ .step-header span {
+    float: left;
+ }
+
+ .step-body {
+     flex: 1;
+     padding: 20px;
+ }
+
+ .nested-step-container {
+     height: fit-content;
+     margin-bottom: 10px;
+     border-style: groove;
+ }

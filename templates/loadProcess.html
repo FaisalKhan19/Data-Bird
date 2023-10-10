@@ -19,13 +19,36 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">File</a>
+                            <div class="dropdown">
+                                <button id="nav-droptoggle" class="dropbtn">File</button>
+                                <div id="myDropdown-File" class="dropdown-content">
+                                    <a href="#">New</a>
+                                    <a href="#">New Window</a>
+                                    <a href="#">Open</a>
+                                    <a href="#">Open in new window</a>
+                                    <a href="#">Save</a>
+                                    <a href="#">Save As</a>
+                                </div>
+                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">View</a>
+                            <div class="dropdown">
+                                <button id="nav-droptoggle" class="dropbtn">View</button>
+                                <div id="myDropdown-View" class="dropdown-content">
+                                    <a href="#">Command Palette</a>
+                                    <a href="#">Change Theme</a>
+                                    <a href="#">Layout</a>
+                                </div>
+                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Edit</a>
+                            <div class="dropdown">
+                                <button id="nav-droptoggle" class="dropbtn">Edit</button>
+                                <div id="myDropdown-Edit" class="dropdown-content dropdown-Edit">
+                                    <a href="#">Undo</a>
+                                    <a href="#">Redo</a>
+                                </div>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">About</a>
@@ -34,10 +57,10 @@
                             <a class="nav-link" href="#">Help</a>
                         </li>
                         <li class="nav-item nav-button">
-                            <button id="build" class = 'btn btn-gen rounded-input nav-link'>Build Process</button>
+                            <button id="build" class='btn btn-gen rounded-input nav-link'>Build Process</button>
                         </li>
                         <li class="nav-item nav-button">
-                            <button id="run" class = 'btn btn-gen rounded-input nav-link'>Run Process</button>
+                            <button id="run" class='btn btn-gen rounded-input nav-link'>Run Process</button>
                         </li>
                         <li id="load-process-button-nav" class="nav-item nav-button">
                             <button id="load-json-button" class="btn btn-primary">
@@ -76,11 +99,8 @@
                 </div>
                 <!-- Workspace Content -->
                 <div class="col-lg-8 p-4 workspace-container">
-                    <div id="workspace-container" class="background-text-button d-flex flex-column align-items-center justify-content-center">
-                        <h2 id="load-process-text">Load New Process</h2>
-                        <button id="load-json-button-workspace" class="btn btn-primary">
-                            <span class="fw-bold">+</span>
-                        </button>
+                    <div id="workspace-container"
+                        class="background-text-button d-flex flex-column align-items-center justify-content-center">
                         <pre id="output"></pre>
                         <div id="dynamicContentContainer"></div>
                     </div>
