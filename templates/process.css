@@ -192,12 +192,13 @@
  }
 
  .step-header {
-     border-style: groove;
+     /* border-style: groove; */
      background: Grey;
+     text-align: justify;
  }
 
- .step-header span {
-    float: left;
+ .step-header img {
+    float: right;
  }
 
  .step-body {
@@ -209,4 +210,5 @@
      height: fit-content;
      margin-bottom: 10px;
      border-style: groove;
+     margin-bottom: 40px;
  }

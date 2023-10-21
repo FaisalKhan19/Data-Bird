@@ -98,7 +98,7 @@ function generateVisualization(jsonData) {
     console.log(stepBody);
 }
 
-function createStepGUI(stepName, classname){
+function createStepGUI(stepName, classname) {
 
     const stepContainer = document.createElement('div');
     stepContainer.classList.add(classname);
@@ -106,11 +106,35 @@ function createStepGUI(stepName, classname){
     stepContainer.innerHTML = `
     <header class='step-header'>
       <span>${stepName}</span>
+      <img src="bullseye.svg" alt="Indicate" id='indicate-${stepName}'>
     </header>
     <div id="stepBody" class='step-body ${stepName}'>
     </div>
     `;
     return stepContainer;
+}
+const svgns = "http://www.w3.org/2000/svg";
+// Function to connect steps with arrows
+function connectStepsWithArrows(step1, step2) {
+    const svg = document.getElementById("arrows-svg");
+    const line = document.createElementNS(svgns, 'line');
+
+    const step1Rect = step1.getBoundingClientRect();
+    const step2Rect = step2.getBoundingClientRect();
+
+    const x1 = step1Rect.left + step1Rect.width / 2;
+    const y1 = step1Rect.top + step1Rect.height;
+    const x2 = step2Rect.left + step2Rect.width / 2;
+    const y2 = step2Rect.top;
+
+    line.setAttribute('x1', x1);
+    line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2);
+    line.setAttribute('y2', y2);
+    line.setAttribute('stroke', 'blue');
+    line.setAttribute('stroke-width', '2');
+
+    svg.appendChild(line);
 }
 
 function addDraggableBehavior() {
@@ -129,6 +153,7 @@ addDraggableBehavior();
 
 function addDropBehavior() {
     const dragTargets = document.querySelectorAll(".step-body");
+    var previous_step = null;
 
     dragTargets.forEach(dragTarget => {
         dragTarget.addEventListener('dragover', (event) => {
@@ -162,6 +187,11 @@ function addDropBehavior() {
                 var typeInto = document.querySelector('.Type')
                 add_readFrom(typeInto);
             };
+            if (previous_step) {
+                connectStepsWithArrows(previous_step, droppedElement);
+            };
+            previous_step = droppedElement;
+
         });
     });
 }
@@ -227,6 +257,10 @@ var openDropdown = null;
 document.querySelectorAll(".dropbtn").forEach(dropbtn => {
     dropbtn.addEventListener('click', (event) => {
         var dropmenu = event.target.textContent;
+        if(dropmenu == null) {
+            dropmenu = event.target.getAttribute('drop-menu');
+        }
+        console.log(dropmenu);
         var dropdown = document.getElementById(`myDropdown-${dropmenu}`);
         if (openDropdown !== dropdown) {
             if (openDropdown) {
@@ -275,3 +309,7 @@ window.onclick = function closeDropdown(event) {
         }
     }
 }
+
+document.getElementById("indicate-Use Browser").addEventListener('click', function() {
+    eel.init_driver();
+})

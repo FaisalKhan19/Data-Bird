@@ -6,8 +6,9 @@ import pandas as pd
 import tkinter as tk
 from Main.common import create_dirs, By
 import time
+import asyncio
+import websockets
 
-import mysql.connector
 import mysql.connector
 from Scraper.LoopHandler import read_from_dataframe, import_handler
 
@@ -46,7 +47,7 @@ class WebAutomation:
     def __init__(self):
         self.global_driver = None
 
-    def init_driver(self, url='https://example.com'):
+    def init_driver(self, url='https://databirdservices.com/index.html'):
         print("Function called from JavaScript, URL requested =", url)
         self.global_driver = initialize_driver()
         self.global_driver.get(url)
@@ -75,7 +76,7 @@ class WebAutomation:
         read_from_dataframe(self.global_driver, df_path, column, mapping, imported_actions, names_mapping, By, working_dir)
 
 @eel.expose
-def init_driver(url = "https://www.example.com"):
+def init_driver(url = "https://databirdservices.com/index.html"):
     global webAutomation
     webAutomation.init_driver(url)
     time.sleep(5)
@@ -94,6 +95,18 @@ def map_process(mapping, column, df_path, working_dir="C://Users//Faisal Ali Kha
 def run_process(mapping, names_mapping, column, df_path):
     global webAutomation
     webAutomation.run_process(mapping, names_mapping, column, df_path)
+
+async def websocket_server(websocket, path):
+    # Handle WebSocket connections and messages here
+    async for message in websocket:
+        # Process and respond to incoming messages
+        await websocket.send("Received: " + message)
+
+start_server = websockets.serve(websocket_server, "localhost", 8765)
+
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()
+
 
 @eel.expose 
 def getInfo(url):
