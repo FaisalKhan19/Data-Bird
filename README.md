@@ -111,8 +111,4 @@ by Mohd Rehan
 by Faisal Ali Khan
 
 [Linkedin](https://www.linkedin.com/in/faisal-k-727b5017b/) | [GitHub](https://github.com/faisalkhan19)
-<br />
-by Mohammad Adnaan<br />
-
-[Linkedin](https://www.linkedin.com/in/mohammad-adnaan-51272024a/) | [GitHub](https://github.com/mohd-adnaan)
 
