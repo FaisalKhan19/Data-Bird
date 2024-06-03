@@ -181,16 +181,16 @@ function addDropBehavior() {
                 // Insert the new element before the placeholder
                 event.target.appendChild(droppedElement);
             }
-
+            
             event.target.classList.remove('drag-over'); // Remove the visual indication class
             if (draggedData == 'Type Into') {
                 var typeInto = document.querySelector('.Type')
                 add_readFrom(typeInto);
             };
-            if (previous_step) {
-                connectStepsWithArrows(previous_step, droppedElement);
-            };
-            previous_step = droppedElement;
+            // if (previous_step) {
+            //     connectStepsWithArrows(previous_step, droppedElement);
+            // };
+            // previous_step = droppedElement;
 
         });
     });

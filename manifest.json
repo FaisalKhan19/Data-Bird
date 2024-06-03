@@ -1,0 +1,10 @@
+{
+    "name": "com.databird.nativehost",
+    "description": "Your Native Messaging Host",
+    "path": "Q:/Projects/Data Bird Tool/nativeMessaginghost.py",
+    "type": "stdio",
+    "allowed_extensions": "djiaebngamhlogmfldbkffoohcidkpcg",
+    "allowed_origins": [
+      "chrome-extension://djiaebngamhlogmfldbkffoohcidkpcg/"
+    ]
+  }

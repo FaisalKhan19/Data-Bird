@@ -8,26 +8,27 @@ from Main.common import create_dirs, By
 import time
 import asyncio
 import websockets
+import os
 
 import mysql.connector
 from Scraper.LoopHandler import read_from_dataframe, import_handler
 
 # connection to the database hosted on aws rds
 
-# def connect_to_db():
-#     try:
-#         db_connection = mysql.connector.connect(
-#             host='price-tracker-db.cqjwbw9v5jpi.us-east-2.rds.amazonaws.com',
-#             user='DataBird',
-#             password='databird1472023',
-#             database='price_tracking_Database'
-#         )
-#         return db_connection
-#     except Exception as e:
-#         print("Error connecting to database:", e)
-#         return None
+def connect_to_db():
+    try:
+        db_connection = mysql.connector.connect(
+            host=os.getenv("HOST"),
+            user=os.getenv("USER"),
+            password=os.getenv("PASSWORD"),
+            database=os.getenv("DATABASE")
+        )
+        return db_connection
+    except Exception as e:
+        print("Error connecting to database:", e)
+        return None
 
-# db_connection = connect_to_db()
+db_connection = connect_to_db()
 
 def is_internet_available():
     try:
@@ -102,10 +103,10 @@ async def websocket_server(websocket, path):
         # Process and respond to incoming messages
         await websocket.send("Received: " + message)
 
-start_server = websockets.serve(websocket_server, "localhost", 8765)
+# start_server = websockets.serve(websocket_server, "localhost", 8765)
 
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+# asyncio.get_event_loop().run_until_complete(start_server)
+# asyncio.get_event_loop().run_forever()
 
 
 @eel.expose 
@@ -167,6 +168,7 @@ def itemsInDB():
         return rows
     except Exception as e:
         print("Something went wrong:", str(e))
+
 
 if __name__ == "__main__":
     eel.init('templates')

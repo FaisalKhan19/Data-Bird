@@ -275,3 +275,9 @@ function getXPath(element) {
   return '';
 }
 
+// Content script
+chrome.runtime.sendMessage({ message: decodeURI("Hello from content script!") });
+chrome.runtime.sendMessage({ message: decodeURI("Hello from content script!") });
+chrome.runtime.sendMessage({ message: decodeURI("Hello from content script!") });
+chrome.runtime.sendMessage({ message: decodeURI("Hello from content script!") });
+
